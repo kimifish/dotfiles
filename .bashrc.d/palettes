@@ -1,0 +1,90 @@
+#!/bin/bash
+# vim: fdm=marker
+
+args=$1
+
+print_palette() {  # {{{
+    array=($palette)
+    echo -e "\e[0m Palette $counter"
+    printf "\e[38;5;${array[0]};48;5;${array[0]}m•0"
+    printf "\e[38;5;${array[1]};48;5;${array[0]}m•1"
+    printf "\e[38;5;${array[2]};48;5;${array[0]}m•2"
+    printf "\e[38;5;${array[3]};48;5;${array[0]}m•3"
+    printf "\e[38;5;${array[4]};48;5;${array[0]}m•4"
+    echo -e "\e[0m"
+    printf "\e[38;5;${array[0]};48;5;${array[1]}m•0"
+    printf "\e[38;5;${array[1]};48;5;${array[1]}m•1"
+    printf "\e[38;5;${array[2]};48;5;${array[1]}m•2"
+    printf "\e[38;5;${array[3]};48;5;${array[1]}m•3"
+    printf "\e[38;5;${array[4]};48;5;${array[1]}m•4"
+    echo -e "\e[0m"
+    printf "\e[38;5;${array[0]};48;5;${array[2]}m•0"
+    printf "\e[38;5;${array[1]};48;5;${array[2]}m•1"
+    printf "\e[38;5;${array[2]};48;5;${array[2]}m•2"
+    printf "\e[38;5;${array[3]};48;5;${array[2]}m•3"
+    printf "\e[38;5;${array[4]};48;5;${array[2]}m•4"
+    echo -e "\e[0m"
+    printf "\e[38;5;${array[0]};48;5;${array[3]}m•0"
+    printf "\e[38;5;${array[1]};48;5;${array[3]}m•1"
+    printf "\e[38;5;${array[2]};48;5;${array[3]}m•2"
+    printf "\e[38;5;${array[3]};48;5;${array[3]}m•3"
+    printf "\e[38;5;${array[4]};48;5;${array[3]}m•4"
+    echo -e "\e[0m"
+    printf "\e[38;5;${array[0]};48;5;${array[4]}m•0"
+    printf "\e[38;5;${array[1]};48;5;${array[4]}m•1"
+    printf "\e[38;5;${array[2]};48;5;${array[4]}m•2"
+    printf "\e[38;5;${array[3]};48;5;${array[4]}m•3"
+    printf "\e[38;5;${array[4]};48;5;${array[4]}m•4"
+    printf "\e[0m"
+    echo
+    echo
+}
+# }}}
+
+PALETTE0="52 236 221 187 124"   # Root
+PALETTE1="17 24 65 137 187"  # The Great Wave off Kanagawa
+PALETTE2="17 130 22 66 109"  # A Sunday Afternoon
+PALETTE3="24 30 130 208 214" # The Scream
+PALETTE4="234 52 94 130 143" # Mona Lisa
+PALETTE5="234 18 24 142 186" # Starry Night
+PALETTE6="52 58 28 136 220"  # The Kiss
+PALETTE7="52 31 172 130 230" # The Persistence of Memory
+PALETTE8="22 23 30 73 221"   # Water Lilies
+PALETTE9="52 33 132 92 230" # The Persistence of Memory
+
+if [[ "$args" == "show" ]]; then
+    counter=1
+    echo
+    for palette in "$PALETTE1" "$PALETTE2" "$PALETTE3" "$PALETTE4" "$PALETTE5" "$PALETTE6" "$PALETTE7" "$PALETTE8" "$PALETTE9"
+    do
+	print_palette 
+	counter=$[$counter +1]
+    done
+    exit 0
+fi
+
+
+if [ "$EUID" -ne 0 ]; then
+case $(hostname) in
+    kimipc)    	export PALETTE=$PALETTE1 ;;
+    kimitop)	export PALETTE=$PALETTE6 ;;
+    kimisus)	export PALETTE=$PALETTE4 ;;
+    wonderwaffle)	export PALETTE=$PALETTE7 ;;
+    f2-lr-sound)	export PALETTE=$PALETTE9 ;;
+    kimihome)	export PALETTE=$PALETTE3 ;;
+    kimiPad)	export PALETTE=$PALETTE2 ;;
+    Vault)	    export PALETTE=$PALETTE5 ;;
+    ip-*|AWS|amnezia)	export PALETTE=$PALETTE8 ;;
+    *) ;;
+esac
+else
+	export PALETTE=$PALETTE0
+fi
+
+plt=($PALETTE)
+export PAL_COL0=${plt[0]}
+export PAL_COL1=${plt[1]}
+export PAL_COL2=${plt[2]}
+export PAL_COL3=${plt[3]}
+export PAL_COL4=${plt[4]}
+

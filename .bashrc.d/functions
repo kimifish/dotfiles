@@ -1,0 +1,93 @@
+
+# TMUX
+tmx() {
+    if [ -n "$SSH_CLIENT" ]; then
+	:
+    else
+	if which tmux >/dev/null 2>&1; then
+	    # if not inside a tmux session, and if no session is started, start a new session
+	    test -z "$TMUX" && (tmux attach || mux default)
+	fi
+    fi
+}
+
+# Calculator
+=() {
+    local IFS=' '
+    local calc="${*//p/+}"
+    calc="${calc//x/*}"
+    bc -l <<<"scale=10;$calc"
+    }
+
+OS_Version() {
+    readarray T < /etc/os-release
+    os_name=`echo ${T[0]} | cut -d '"' -f 2`
+    os_version=`echo ${T[1]} | cut -d '"' -f 2`
+    printf "$os_name $os_version"
+}
+
+# SIMPLE CALCULATOR {{{
+calc() {
+    if which bc &>/dev/null; then
+        echo "scale=3; $*" | bc -l
+    else
+        awk "BEGIN { print $* }"
+    fi
+}
+# }}}
+
+# ## FINDS DIRECTORY SIZES AND LISTS THEM FOR THE CURRENT DIRECTORY {{{
+dirsize() {
+    du -shx * .[a-zA-Z0-9_]* 2> /dev/null | egrep '^ *[0-9.]*[MG]' | sort -n > /tmp/list
+    egrep '^ *[0-9.]*M' /tmp/list
+    egrep '^ *[0-9.]*G' /tmp/list
+    rm -rf /tmp/list
+}
+# }}}
+
+# ENTER AND LIST DIRECTORY {{{
+cd() { builtin cd -- "$@" && { [ "$PS1" = "" ] || ls -hrt --color; }; }
+# }}}
+
+# Systemd {{{
+
+if which systemctl &>/dev/null; then
+    function start() { 
+	sudo systemctl start $1.service 
+    }
+    function stop() { 
+	sudo systemctl stop $1.service 
+    }
+    function restart() { 
+	sudo systemctl restart $1.service 
+    }
+    function status() { 
+	systemctl status $1.service 
+    }
+    function enable() { 
+	sudo systemctl enable $1.service 
+    }
+    function disable() { 
+	sudo systemctl disable $1.service 
+    }
+
+    function ustart() { 
+	systemctl --user start $1.service 
+    }
+    function ustop() { 
+	systemctl --user stop $1.service 
+    }
+    function urestart() { 
+	systemctl --user restart $1.service 
+    }
+    function ustatus() { 
+	systemctl --user status $1.service 
+    }
+    function uenable() { 
+	systemctl --user enable $1.service 
+    }
+    function udisable() { 
+	systemctl --user disable $1.service 
+    }
+fi
+# }}}

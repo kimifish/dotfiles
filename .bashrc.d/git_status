@@ -1,0 +1,10 @@
+#!/bin/bash
+
+_git_status() {
+    GSP="$(git status --porcelain --branch -uno 2>/dev/null)"
+    GSPcc="$(grep -c "^[12] .M" <<< "${GSP}")"
+    GSPcb="$(awk '/branch.head/ {print $1}' <<< "${GSP}")"
+}
+_git_status
+echo $GSPcc
+echo $GSPcb
