@@ -1,0 +1,11 @@
+[Unit]
+Description=System Files Backup to Vault.lan
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=rsync -auv --files-from=/home/%I/.config/rsync/system-files.lst pi@vault.lan::configs-sync /
+ExecAfter=/home/%I/.config/rsync/system-aftersync.sh
+
+[Install]
+WantedBy=default.target

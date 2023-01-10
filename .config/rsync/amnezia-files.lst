@@ -1,0 +1,8 @@
+/etc/taskd/
+/etc/radicale/
+/etc/openvpn/
+/etc/apache2/
+/etc/dnsmasq.conf
+/etc/dnsmasq.d/
+/home/kimifish/.config/radicale/
+/home/kimifish/bin/calDiary/

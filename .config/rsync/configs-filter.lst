@@ -1,0 +1,10 @@
+!
++ /etc/default/keyboard
++ /usr/lib/systemd/user/statusbar.service
++ /usr/lib/systemd/user/mpd.*
++ /usr/share/X11/xkb/symbols/kimi
++ /etc/taskd/config
++ /etc/netplan/00-installer-config.yaml
++ /etc/kmscon/kmscon.conf
+- *
+

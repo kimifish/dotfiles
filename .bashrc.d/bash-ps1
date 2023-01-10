@@ -109,6 +109,7 @@ _git_status() {  #{{{
     if [[ "$GSPb" != "" ]]; then
 	case "$GSPbcut" in
 	    master) 	GSPb="M" ;;
+		main..)     GSPb="m" ;;
 	    *)		: ;;
 	esac
 	git_str+="$GSPb"

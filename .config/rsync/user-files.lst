@@ -1,0 +1,83 @@
+/.vimrc
+/.zshrc
+/.tmux.conf
+/.taskrc
+/.profile
+/.fzf.bash
+/.bashrc
+/.bashrc.d/
+
+/.ssh/authorized_keys
+/.ssh/known_hosts
+/.teamocil/
+/.tmux/
+/.tmuxinator/
+/.vifm/vifmrc
+/.vifm/colors/cyberpunk.vifm
+
+/kimipc_home.ssh
+/kimihome.ssh
+/kimihome_openHAB.ssh
+/vault_home.ssh
+
+/.config/systemd/
+/.config/profanity/
+/.config/nu/
+/.config/i3/config.shared
+/.config/i3/i3-config-from-templates
+/.config/i3blocks/kimitop.conf
+/.config/i3blocks/kimipc.conf
+/.config/i3blocks/config
+/.config/lvim/
+/.config/htop/htoprc
+/.config/dunst/dunstrc
+/.config/bot.cfg
+/.config/pavucontrol.ini
+/.config/rsync/
+/.config/kitty/
+/.config/ncmpcpp/bindings
+
+/.local/bin/xkblayout-state
+/.local/bin/statusbar/
+/.local/bin/screenlock
+
+/.local/share/fonts/DejaVu Sans Mono Nerd Font Complete Mono.ttf
+/.local/share/fonts/Noto Mono Nerd Font Complete Mono.ttf
+/.local/share/fonts/Noto Sans Mono Regular Nerd Font Complete.ttf
+/.local/share/fonts/Noto Sans Mono Regular Nerd Font Complete Mono.ttf
+/.local/share/fonts/Noto Sans Mono Regular Nerd Font Complete Mono Windows Compatible.ttf
+/.local/share/fonts/Noto Sans Mono Regular Nerd Font Complete Windows Compatible.ttf
+/.local/share/fonts/Play-Regular.ttf
+/.local/share/fonts/Play-Bold.ttf
+/.local/share/fonts/JetBrains Mono Bold Italic Nerd Font Complete Mono.ttf
+/.local/share/fonts/JetBrains Mono Bold Italic Nerd Font Complete Mono Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Bold Italic Nerd Font Complete.ttf
+/.local/share/fonts/JetBrains Mono Bold Italic Nerd Font Complete Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Bold Nerd Font Complete Mono.ttf
+/.local/share/fonts/JetBrains Mono Bold Nerd Font Complete Mono Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Bold Nerd Font Complete.ttf
+/.local/share/fonts/JetBrains Mono Bold Nerd Font Complete Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Italic Nerd Font Complete Mono.ttf
+/.local/share/fonts/JetBrains Mono Italic Nerd Font Complete Mono Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Italic Nerd Font Complete.ttf
+/.local/share/fonts/JetBrains Mono Italic Nerd Font Complete Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Medium Italic Nerd Font Complete Mono.ttf
+/.local/share/fonts/JetBrains Mono Medium Italic Nerd Font Complete Mono Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Medium Italic Nerd Font Complete.ttf
+/.local/share/fonts/JetBrains Mono Medium Italic Nerd Font Complete Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Medium Med Ita Nerd Font Complete Mono.ttf
+/.local/share/fonts/JetBrains Mono Medium Med Ita Nerd Font Complete Mono Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Medium Med Ita Nerd Font Complete.ttf
+/.local/share/fonts/JetBrains Mono Medium Med Ita Nerd Font Complete Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Medium Medium Nerd Font Complete Mono.ttf
+/.local/share/fonts/JetBrains Mono Medium Medium Nerd Font Complete Mono Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Medium Medium Nerd Font Complete.ttf
+/.local/share/fonts/JetBrains Mono Medium Medium Nerd Font Complete Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Medium Nerd Font Complete Mono.ttf
+/.local/share/fonts/JetBrains Mono Medium Nerd Font Complete Mono Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Medium Nerd Font Complete.ttf
+/.local/share/fonts/JetBrains Mono Medium Nerd Font Complete Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Regular Nerd Font Complete Mono.ttf
+/.local/share/fonts/JetBrains Mono Regular Nerd Font Complete Mono Windows Compatible.ttf
+/.local/share/fonts/JetBrains Mono Regular Nerd Font Complete.ttf
+/.local/share/fonts/JetBrains Mono Regular Nerd Font Complete Windows Compatible.ttf

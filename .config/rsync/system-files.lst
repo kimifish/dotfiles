@@ -1,0 +1,15 @@
+/etc/default/keyboard
+/usr/lib/systemd/user/userfiles-vault2local@.service
+/usr/lib/systemd/user/userfiles-vault2local@.timer
+/usr/lib/systemd/user/userfiles-local2vault@.service
+/usr/lib/systemd/user/userfiles-local2vault@.timer
+/usr/lib/systemd/system/systemfiles-vault2local@.service
+/usr/lib/systemd/system/systemfiles-vault2local@.timer
+/usr/lib/systemd/system/systemfiles-local2vault@.service
+/usr/lib/systemd/system/systemfiles-local2vault@.timer
+/usr/share/X11/xkb/symbols/kimi
+/etc/taskd/config
+/etc/netplan/00-installer-config.yaml
+/etc/kmscon/kmscon.conf
+/root/.bashrc.d
+/root/.bashrc

@@ -1,0 +1,13 @@
+[Unit]
+Description=User Files Backup to Vault.lan
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rsync -auvL --files-from=/home/%i/.config/rsync/user-files.lst /home/%i pi@vault.lan::user-configs-sync
+
+# disallow writing to /usr, /bin, /sbin, ...
+ProtectSystem=yes
+
+[Install]
+WantedBy=default.target

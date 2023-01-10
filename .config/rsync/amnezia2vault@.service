@@ -1,0 +1,10 @@
+[Unit]
+Description=Files Backup from Amnezia to Vault.vpn
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=rsync -auv --files-from=/home/%I/.config/rsync/amnezia-files.lst / pi@vault.vpn::amnezia-sync
+
+[Install]
+WantedBy=default.target
