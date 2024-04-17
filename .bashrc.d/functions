@@ -46,7 +46,7 @@ dirsize() {
 # }}}
 
 # ENTER AND LIST DIRECTORY {{{
-cd() { builtin cd -- "$@" && { [ "$PS1" = "" ] || ls -hrt --color; }; }
+cd() { builtin cd -- "$@" && { [ "$PS1" = "" ] || ls; }; }
 # }}}
 
 # Systemd {{{

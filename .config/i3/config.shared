@@ -25,7 +25,7 @@ set $exorf $HOME/kimiside@gmail.com/bin/exec_or_focus.sh
 #font pango:monospace 8
 #font pango:DejaVu Sans Mono 6
 #font pango:NotoMono Nerd Font Mono Book 6
-font pango:Play-Regular 10
+font pango:Play-Regular 8
 #font pango:DejaVu Sans Mono 8
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 
@@ -177,6 +177,30 @@ bindsym $mod+Shift+a focus child
 
 # sticky window enable
 bindsym $mod+Shift+s sticky toggle
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
 # }}}
 
 # Positioning apps {{{
@@ -195,12 +219,10 @@ bindsym $mod+Shift+s sticky toggle
 # Apps binds {{{
 
 # vifm
-bindsym $mod+Return exec i3-sensible-terminal --class="vifm" "vifm"
-# vim-input
-bindsym $mod+v exec vim-input-field.sh
+bindsym $mod+Return exec i3-sensible-terminal --role="vifm" --geometry=120x30 -e "TERM=tmux-256color vifm"
+bindsym $mod+Return exec i3-sensible-terminal --class="vifm" vifm
 # tasksh
-#bindsym $mod+n exec i3-sensible-terminal --class="vifm" --geometry=160x45 "TERM=tmux-256color tw-tui.AppImage"
-bindsym $mod+n exec i3-sensible-terminal --class="vifm" "tw-tui.AppImage"
+bindsym $mod+n exec i3-sensible-terminal --role="vifm" --geometry=160x45 -e "TERM=tmux-256color tw-tui.AppImage"
 # flameshot
 bindsym $mod+Print exec flameshot gui 
 # dmenu-desktop
@@ -264,7 +286,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # lock screen
 #bindsym Control+Shift+PgUp exec "terminology -e vifm"
 bindsym $mod+Pause exec screenlock lock
-#bindsym $mod+Control+Pause exec ". $HOME/bin/autolock.sh toggle"
+#bindsym $mod+Control+Pause exec "$HOME/bin/autolock.sh toggle"
 
 bindsym --release $mod+Shift+Pause exec monitorcontrol off
 # }}}
@@ -278,20 +300,20 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 30 px
-        bindsym j resize grow height 30 px
-        bindsym k resize shrink height 30 px
-        bindsym l resize grow width 30 px
+        bindsym h resize shrink width 3 px
+        bindsym j resize grow height 3 px
+        bindsym k resize shrink height 3 px
+        bindsym l resize grow width 3 px
 
         # same bindings, but for the arrow keys
         #bindsym Left resize shrink width 3 px or 3 ppt
         #bindsym Left resize shrink width 3 px or 3 ppt
         #bindsym Down resize grow height 3 px or 3 ppt
         #bindsym Up resize shrink height 3 px or 3 ppt
-        bindsym Right resize grow width 30 px
-        bindsym Down resize grow height 30 px
-        bindsym Up resize shrink height 30 px
-        bindsym Right resize grow width 30 px
+        bindsym Right resize grow width 3 px
+        bindsym Down resize grow height 3 px
+        bindsym Up resize shrink height 3 px
+        bindsym Right resize grow width 3 px
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -331,12 +353,14 @@ mode "$mode_launcher" {
 #}
                      
 # Startup autorun {{{
+#exec --no-startup-id setxkbmap ''"pc+inet(evdev)+us+level3(ralt_switch),ru" -option grp:caps_toggle -option grp_led:scroll'
 exec --no-startup-id "setxkbmap -layout kimi,ru -variant latin, -option grp:caps_toggle -option grp_led:scroll -option lv5:ralt_switch -option lv3:menu_switch"
+# exec --no-startup-id "$HOME/.config/i3/autolock.sh start"
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
+exec --no-startup-id insync start
+exec --no-startup-id pasystray
+exec --no-startup-id export ACTIVE_WM=i3
+exec --no-startup-id /usr/bin/snap userd --autostart
 # }}}
-
-include ~/.config/i3/`hostname`.d/*.conf
-
-# Должно быть, обои стоит ставить сюда, иначе рвутся
-# Setting wallpaper
-exec $HOME/bin/set_random_wallpaper.sh "$HOME/kimiside@gmail.com/Photos/Wallpapers/Cowboy Bebop"
 

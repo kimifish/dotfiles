@@ -12,12 +12,12 @@ case $- in
 esac
 
 # Setting DISPLAY if not set
-if [ -z ${DISPLAY+x} ]; then 
-	export DISPLAY=":0" 
-fi
+#if [ -z ${DISPLAY+x} ]; then 
+#	export DISPLAY=":0" 
+#fi
 
 # Looking good everywhere i use it
-export TERM=xterm-256color
+# export TERM=xterm-256color
 
 # Bash options {{{
 shopt -s cdspell                 # Correct cd typos
@@ -48,7 +48,7 @@ fi
 export HISTSIZE=1000            # bash history will save N commands
 export HISTFILESIZE=${HISTSIZE} # bash will remember N commands
 export HISTCONTROL=ignoreboth   # ingore duplicates and spaces
-export HISTIGNORE='&:ls:ll:la:cd:exit:clear:history'
+export HISTIGNORE='&:ls:ll:la:lal:lsize:lasize:lmod:lamod:cd:..:...:....:exit:clear:history'
 #}}}
 # Fancy prompt {{{
 if [ -f "$HOME/.bashrc.d/bash-ps1" ]; then
@@ -80,6 +80,7 @@ stty -ixon
 
 # FZF {{{
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f /usr/share/doc/fzf/examples/completion.bash ] && source /usr/share/doc/fzf/examples/completion.bash
 FZF_TMUX=1
 FZF_TMUX_HEIGHT=25%
 # }}}
@@ -108,12 +109,13 @@ printf "\033[00m"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+[ `hostname` == 'f2-lr-sound' ] && return 0
 # Tmux start {{{
 # First - checking if there is a tmux app
 command -v tmux &> /dev/null
 tmux_exist=$?
 
-# Second - checking if i'm loggin in by ssh
+# Second - checking if i'm loggin in by ssh or inside IDE
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 	if [ -n "$PHONE_SESSION" ]; then
 		session_type="phone"
@@ -121,7 +123,11 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 		session_type="remote"
 	fi
 else
-    session_type="local"
+	if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+		session_type="IDE"
+	else
+    	session_type="local"
+	fi
 fi
 
 # Third - checking if remote or local session exists
@@ -185,3 +191,4 @@ else
    :
 fi
 # }}}
+

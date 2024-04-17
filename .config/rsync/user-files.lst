@@ -9,6 +9,7 @@
 
 /.ssh/authorized_keys
 /.ssh/known_hosts
+/.ssh/config.d/
 /.teamocil/
 /.tmux/
 /.tmuxinator/
@@ -23,8 +24,9 @@
 /.config/systemd/
 /.config/profanity/
 /.config/nu/
-/.config/i3/config.shared
-/.config/i3/i3-config-from-templates
+/.config/i3/
+/.config/i3/kimitop.d/
+/.config/i3/kimipc.d/
 /.config/i3blocks/kimitop.conf
 /.config/i3blocks/kimipc.conf
 /.config/i3blocks/config
@@ -35,6 +37,8 @@
 /.config/pavucontrol.ini
 /.config/rsync/
 /.config/kitty/
+/.config/tmux/
+/.config/nvim/
 /.config/ncmpcpp/bindings
 
 /.local/bin/xkblayout-state

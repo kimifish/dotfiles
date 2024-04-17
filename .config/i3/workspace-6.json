@@ -1,0 +1,48 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "normal",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 1031,
+       "width": 1494,
+       "x": 1050,
+       "y": 20
+    },
+    "name": "WhatsApp",
+    "percent": 0.5,
+    "swallows": [
+       {
+       // "class": "^Firefox$",
+       // "instance": "^Navigator$",
+        "title": "^https\\:\\/\\/web\\.whatsapp\\.com.*$",
+       // "transient_for": "^$",
+        "window_role": "^browser$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    "border": "normal",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 1656,
+       "width": 1042,
+       "x": 4,
+       "y": 20
+    },
+    "name": "Telegram",
+    "percent": 0.5,
+    "swallows": [
+       {
+        "class": "^TelegramDesktop$",
+        "instance": "^Telegram$",
+       // "title": "^Telegram\\ \\(3126\\)$",
+       // "transient_for": "^$"
+       }
+    ],
+    "type": "con"
+}
+

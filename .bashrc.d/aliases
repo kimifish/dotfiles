@@ -108,12 +108,13 @@ alias gs='git status'
 alias gsu='git status -uno'
 # }}}
 # Applications {{{
-alias update='sudo apt update'
 alias tor='(/usr/sbin/tor &)'
 alias mc='EDITOR=vim mc'
 alias py3='python3'
 alias ncmp-slave="ncmpcpp -c ~/.ncmpcpp/config-slave"
 alias svim='vim -u $HOME/.SpaceVim/vimrc'
+alias apt='nala'
+alias update='sudo apt update'
 # }}}
 # Personal {{{
 #alias Повторить="$HOME/kimiside@gmail.com/Скрипты/repeating.py"

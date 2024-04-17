@@ -70,9 +70,10 @@ case $(hostname) in
     kimitop)	export PALETTE=$PALETTE6 ;;
     kimisus)	export PALETTE=$PALETTE4 ;;
     wonderwaffle)	export PALETTE=$PALETTE7 ;;
+    soundmaster)	export PALETTE=$PALETTE9 ;;
     f2-lr-sound)	export PALETTE=$PALETTE9 ;;
     kimihome)	export PALETTE=$PALETTE3 ;;
-    kimiPad)	export PALETTE=$PALETTE2 ;;
+    kimipad)	export PALETTE=$PALETTE2 ;;
     Vault)	    export PALETTE=$PALETTE5 ;;
     ip-*|AWS|amnezia)	export PALETTE=$PALETTE8 ;;
     *) ;;

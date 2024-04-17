@@ -11,6 +11,11 @@
 # Change keyboard repeat and delay
 xset r rate 280 40
 
+XDG_DATA_HOME="$HOME/.local/share"
+XDG_CONFIG_HOME="$HOME/.config"
+XDG_CONFIG_DIR="$HOME/.config"
+XDG_STATE_HOME="$HOME/.local/state"
+XDG_CACHE_HOME="$HOME/.cache"
 PATH="/usr/local/sbin::/usr/sbin:/sbin/:/bin:/usr/bin"
 
 # set PATH so it includes user's private bin if it exists
@@ -44,15 +49,21 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
 	PATH="$HOME/.local/bin:$PATH"
 fi
-if [ -d "$HOME/.config" ] ; then
-	XDG_CONFIG_HOME="$HOME/.config"
-fi
 if [ -d "$HOME/.local/go/bin" ] ; then 
 	PATH="$HOME/.local/go/bin:$PATH"
 fi
 if [ -d "/usr/local/go" ] ; then 
 	PATH="/usr/local/go:$PATH"
 fi
+if [ -d "/opt/amdgpu/bin" ] ; then 
+	PATH="/opt/amdgpu/bin:$PATH"
+fi
+if [ -d "/opt/amdgpu-pro/bin" ] ; then 
+	PATH="/opt/amdgpu-pro/bin:$PATH"
+fi
+
+# Added by Toolbox App
+export PATH="$PATH:/home/kimifish/.local/share/JetBrains/Toolbox/scripts"
 
 # Detecting current window manager if X server is running
 #if xset q &>/dev/null; then
@@ -75,6 +86,33 @@ export $(dbus-launch)
 [[ -f /$HOME/.local/bin/kitty ]] && export TERMINAL="kitty"
 [[ -f /bin/kitty ]] && export TERMINAL="kitty"
 
+[ -d "$HOME/.config/zsh" ] && export ZDOTDIR="$HOME/.config/zsh"
+export ANDROID_HOME="$XDG_DATA_HOME"/android
+export ATOM_HOME="$XDG_DATA_HOME"/atom
+export HISTFILE="${XDG_STATE_HOME}"/bash/history
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+
+[[ -f ${HOME}/.cargo/env ]] && . "$HOME/.cargo/env"
+
+# Starting X if tty1
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+    echo Starting  X...
+    sleep 1
+#    exec nohup startx > .xlog & vlock
+    exec startx 
+    # There is a significant security difference when using plain startx 
+    # instead of a login manager. Thus you run startx from your shell you 
+    # are always able to switch from X (usually on tt7) back to 
+    # tty1 (Ctrl+Alt+F1) and gain control over the user shell even when 
+    # the screen is locked (e.g., via XScreenSaver, i3lock, etc.). 
+    # A solution: replace 
+    #    exec startx 
+    # with 
+    #    exec nohup startx > .xlog & vlock
+    # This will start X, redirect the print out to ~/.xlog and lock the shell. 
+    # Of course you need to install vlock first.
+fi
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
@@ -82,10 +120,6 @@ if [ -n "$BASH_VERSION" ]; then
 	. "$HOME/.bashrc"
     fi
 fi
-[[ -f ${HOME}/.cargo/env ]] && . "$HOME/.cargo/env"
 
 # echo "========== Exiting .profile ==========" 
 
-
-# Added by Toolbox App
-export PATH="$PATH:/home/kimifish/.local/share/JetBrains/Toolbox/scripts"
