@@ -1,0 +1,1 @@
+/home/kimifish/.config/nvim/lua/base/keymaps1.lua

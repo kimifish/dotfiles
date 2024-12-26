@@ -1,0 +1,1 @@
+/home/kimifish/.config/nvim/lua/plugins/Comment-setup.lua

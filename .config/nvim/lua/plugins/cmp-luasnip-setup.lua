@@ -1,0 +1,1 @@
+/home/kimifish/.config/nvim/lua/plugins/cmp-luasnip-setup.lua
