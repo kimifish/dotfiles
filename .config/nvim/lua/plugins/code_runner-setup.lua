@@ -1,1 +1,0 @@
-/home/kimifish/.config/nvim/lua/plugins/code_runner-setup.lua

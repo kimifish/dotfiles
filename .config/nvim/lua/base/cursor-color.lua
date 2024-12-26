@@ -1,1 +1,0 @@
-/home/kimifish/.config/nvim/lua/base/cursor-color.lua
