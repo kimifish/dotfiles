@@ -1,0 +1,5 @@
+[user]
+	email = kimiside@gmail.com
+	name = kimifish
+[core]
+	autocrlf = input

@@ -1,0 +1,58 @@
+# [Created by task 2.5.0 10/9/2016 11:56:07]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.task
+
+# Color theme (uncomment one to use)
+#include /usr/share/taskwarrior/light-16.theme
+#include /usr/share/taskwarrior/light-256.theme
+#include /usr/share/taskwarrior/dark-16.theme
+#include /usr/share/taskwarrior/dark-256.theme
+#include /usr/share/taskwarrior/dark-red-256.theme
+#include /usr/share/taskwarrior/dark-green-256.theme
+#include /usr/share/taskwarrior/dark-blue-256.theme
+#include /usr/share/taskwarrior/dark-violets-256.theme
+include /usr/share/taskwarrior/dark-yellow-green.theme
+#include /usr/share/taskwarrior/dark-gray-256.theme
+#include /usr/share/taskwarrior/dark-gray-blue-256.theme
+#include /usr/share/taskwarrior/solarized-light-256.theme
+#include /usr/share/taskwarrior/no-color.theme
+#include /usr/share/taskwarrior/solarized-dark-256.theme
+
+taskd.certificate=/home/kimifish/.task/client.cert.pem
+taskd.key=/home/kimifish/.task/client.key.pem
+taskd.ca=/home/kimifish/.task/ca.cert.pem
+#taskd.server=kimifish.tk:53589
+#taskd.server=kimipc.local:53589
+#taskd.server=10.8.0.1:53589
+#taskd.server=172.17.0.1:53589
+taskd.server=10.8.1.1:53589
+taskd.credentials=kimifish/kimifish/1d313d73-9a6e-4437-82cc-2f351274124e
+taskd.trust=ignore hostname
+
+report.next.columns=id,depends.indicator,priority,project,tags,due,until.remaining,description,urgency
+report.next.labels=ID,D,P,Project,Tags,Due,Until,Description,Urg
+report.popup.columns=id,due.iso,description.oneline
+report.popup.labels=id,Due,Desc
+report.popup.sort=due+
+report.popup.filter=due:today
+report.next.sort=due+,urgency-
+
+report.routine.description="Routine tasks"
+report.routine.filter=+routine status:pending
+report.routine.columns=id,depends.indicator,priority,due,until.remaining,description,urgency
+report.routine.labels=ID,D,P,Due,Until,Description,Urg
+report.routine.sort=urgency-,priority-,due+
+
+tasksh.autoclear=1
+news.version=2.6.0
