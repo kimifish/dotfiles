@@ -1,0 +1,9 @@
+name: local
+root: ~
+windows:
+  - fm:
+    layout: even-horizontal
+    panes:
+      - bash -c "figlet -f small Hi!"
+      - bash -c vifm
+

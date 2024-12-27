@@ -1,0 +1,10 @@
+name: remote
+windows:
+    - overview:
+        root: ~
+        layout: main-horizontal
+        panes:
+            - grc journalctl -f --priority=4 --unit=openvpn@kimipad.service --unit=bluetooth.service --user-unit=pulseaudio.service
+            - htop -d 30
+            - ls -la
+

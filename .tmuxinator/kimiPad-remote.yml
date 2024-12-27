@@ -1,0 +1,9 @@
+name: remote
+root: /home/kimifish
+windows:
+  - name: overview
+    layout: main-vertical
+    panes:
+      - bash
+      - grc journalctl -f --priority=4 --unit=openvpn@kimilaptop.service --unit=bluetooth.service --user-unit=pulseaudio.service
+      - htop -d 30

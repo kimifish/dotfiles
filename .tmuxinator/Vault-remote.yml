@@ -1,0 +1,15 @@
+name: remote
+windows:
+    - name: overview
+      root: /home/pi
+      layout: main-vertical
+      panes:
+        - bash
+        - grc journalctl -f --user-unit=pulseaudio.service --user-unit=pa-dlna.service --user-unit=mpd.service --unit=plexmediaserver.service --unit=openmediavault-engined.service --unit=qbittorrent-nox.service --unit=openvpn-client@vault.service --unit=nginx.service --unit=ssh.service --priority=4
+        - htop -d 50
+    - name: music
+      root: /home/pi
+      layout: even-vertical
+      panes:
+        - PWD=/home/pi/bin/ncspot cargo run 2>/dev/null
+        - pulsemixer

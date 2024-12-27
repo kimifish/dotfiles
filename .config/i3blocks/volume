@@ -1,0 +1,15 @@
+#!/bin/bash
+if [[ $1 != "" ]]; then
+    bot vol $1
+else
+    case "$BLOCK_BUTTON" in
+	1) bot mute_if >>/dev/null ;;
+	2) i3-msg -q exec pavucontrol ;;
+	3) i3-msg -q exec paprefs ;;
+	4) bot vol +5 >>/dev/null ;;
+	5) bot vol -5 >>/dev/null ;;
+	#*) bot volshort ;;
+    esac
+fi
+bot volshort
+pkill -RTMIN+1 i3blocks

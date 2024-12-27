@@ -1,0 +1,9 @@
+name: remote
+windows:    
+    - name: kimitop
+      root: /home/kimifish
+      layout: main-vertical
+      panes:
+        - bash
+        - grc journalctl -f --user-unit=dbus.service --user-unit=kimibot2.service --user-unit=mpd.service --user-unit=phone_sync.service --user-unit=pulseaudio.service --user-unit=routinetasks.service --user-unit=kimibot.service
+        - htop -d 30

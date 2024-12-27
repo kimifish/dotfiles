@@ -1,0 +1,16 @@
+name: local
+windows:
+  - main:
+      root: ~
+      layout: a656,131x104,0,0[131x67,0,0,0,131x36,0,68,2]
+      panes:
+        - vifm
+        - 
+  - games:
+      root: ~
+      layout: 3306,131x104,0,0[131x55,0,0,1,131x19,0,56,3,131x28,0,76,4]
+      panes:
+        - bpytop
+        - watch -tcn 2 "grc --colour=on sensors"
+        - pulsemixer
+

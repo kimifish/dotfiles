@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+order="$1"
+workdir="$HOME/bin/statusbar"
+flag='norm'
+
+t_crit=80
+t_warn=50
+
+if [[ -v BLOCK_BUTTON ]]; then
+    case "$BLOCK_BUTTON" in
+    	1) i3-msg exec 'terminology -e "htop" --role="htop"' ;;
+	#*) ;;
+    esac
+fi
+
+cpu_usage="$(/usr/share/i3blocks/cpu_usage)"
+# Print color, if needed
+if [ $cpu_usage -gt $t_crit ];then 
+	flag='crit'
+elif [ $cpu_usage -gt $t_warn ]; then 
+	flag='warn'
+fi
+cpu_usage="$cpu_usage%"
+text=" $(printf '%-4s' $cpu_usage)"
+
+$workdir/markup.py "$order" "$flag" "$text"

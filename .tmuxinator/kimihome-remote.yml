@@ -1,0 +1,16 @@
+name: remote
+windows:
+    - overview:
+      root: /home/openhabian
+      layout: main-vertical
+      panes:
+        - echo                                                           
+        - grc journalctl -f --priority=4 --unit=bluetooth.service --unit=mosquitto.service --unit=openhab.service --unit=openvpn@kimihome.service --unit=zigbee2mqtt.service
+        - htop -d 30
+    - kimiHome:
+      root: /home/openhabian
+      layout: main-vertical
+      panes:
+        - echo                                                           
+        - journalctl -f --priority=6 -o cat --unit=kimihome.service
+        - grc tail -f /var/log/openhab/openhab.log

@@ -1,0 +1,9 @@
+name: AI
+windows:
+  - Naima:
+      root: ~
+      layout: a656,131x104,0,0[131x67,0,0,0,131x36,0,68,2]
+      panes:
+        - terminal_ai
+        - 
+

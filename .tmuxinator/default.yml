@@ -1,0 +1,18 @@
+name: ssh
+root: ~/
+windows:
+  - kimiPC:
+      panes:
+        - 
+  - kiminote:
+      panes:
+        -  ssh kimitop.wlan
+  - Pi:
+      panes:
+        - ssh pi@pi.lan
+  - AWS:
+      panes:
+          ssh ubuntu@aws.vpn
+  - Phone:
+      panes:
+          ssh kimiphone.vpn

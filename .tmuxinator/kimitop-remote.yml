@@ -1,0 +1,10 @@
+name: remote
+windows:
+    - overview:
+        root: ~
+        layout: main-horizontal
+        panes:
+            - grc journalctl -f --priority=4
+            - htop -d 30
+            - ls -la
+

@@ -1,0 +1,34 @@
+name: default
+root: ~/
+windows:
+  - maintain:
+      layout: 31d8,186x64,0,0[186x45,0,0{93x45,0,0,6,92x45,94,0,12},186x18,0,46{93x18,0,46,7,92x18,94,46,11}]
+      panes:
+        -  journalctl -f --user-unit=radicale --user-unit=kimibot --user-unit=tgram2pipe --unit=upnpd --user-unit=zeronet --unit=minidlna --unit=openvpn@server --priority=4 --quiet
+        - htop
+        - 
+        - python3
+  - mc:
+      layout: c37e,186x64,0,0,1
+      panes:
+        - EDITOR=vim mc 
+  - office:
+      layout: 39b9,186x64,0,0{126x64,0,0[126x36,0,0,2,126x27,0,37,13],59x64,127,0,8}
+      panes:
+        - vim -c TW
+        - diary
+        - rainbowstream
+  - ncmpcpp:
+      layout: d732,186x64,0,0{117x64,0,0,3,68x64,118,0[68x33,118,0,9,68x30,118,34,10]}
+      panes:
+        - ncmpcpp -s browser
+        - ncmpcpp -c "/home/kimifish/.ncmpcpp/config-slave" -s visualizer
+        - ncmpcpp -c "/home/kimifish/.ncmpcpp/config-slave" -s playlist
+  - weechat:
+      layout: layout c381,186x64,0,0,4
+      panes:
+        - weechat
+  - profanity:
+      layout: c382,186x64,0,0,5
+      panes:
+        - profanity

@@ -1,0 +1,8 @@
+name: IDE
+windows:    
+  - main:
+      root: ~/bin 
+      layout: main-horizontal
+      panes:
+        - 
+        -

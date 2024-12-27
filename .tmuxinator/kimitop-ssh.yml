@@ -1,0 +1,29 @@
+name: ssh
+windows:  
+  - name: kimihome 
+    root: ~
+    #    layout: even-horizontal
+    panes:
+        - commands:
+            - ssh openhabian@kimihome.lan
+
+  - name: vault
+    root: ~
+    #    layout: even-horizontal
+    panes:
+        - commands:
+            - ssh pi@vault.lan
+
+  - name: kimipc
+    root: ~
+    #    layout: even-horizontal
+    panes:
+        - commands:
+            - ssh kimifish@kimipc.lan
+
+  - name: AWS
+    root: ~
+    #    layout: even-horizontal
+    panes:
+        - commands:
+            - ssh ubuntu@10.8.0.1

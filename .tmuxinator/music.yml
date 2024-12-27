@@ -1,0 +1,14 @@
+name: music
+root: ~
+windows:
+  - mpd-0:
+        - "ncmpcpp -h vault.lan -p 6600"
+  - mpd-1:
+        - "ncmpcpp -h vault.lan -p 6601"
+  - mpd-2:
+      panes:
+        - ncmpcpp -h vault.lan -p 6602
+  - mpd-abooks:
+        - ncmpcpp -h vault.lan -p 6610
+  - mpd-iris:
+        - ncmpcpp -h vault.lan -p 6611

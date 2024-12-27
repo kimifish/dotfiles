@@ -1,0 +1,34 @@
+name: SSH
+root: ~/
+windows:
+  - xray:
+      panes:
+          ssh kimifish@xray.zt
+  - kimiPC:
+      panes:
+        - ssh kimifish@kimipc.zt
+  - kimitop:
+      panes:
+        -  ssh kimifish@kimitop.zt
+  - kimipad:
+      panes:
+        -  ssh kimifish@kimipad.zt
+  - kimisus:
+      panes:
+        -  ssh kimifish@kimisus.zt
+  - kimihome:
+      panes:
+        - ssh openhabian@kimihome.zt
+  - vault:
+      panes:
+        - ssh pi@vault.zt
+  # - amnezia:
+  #     panes:
+  #         ssh kimifish@amnezia.zt
+  - SMaster:
+      panes:
+        -  ssh kimifish@soundmaster.zt
+  - Phone:
+      panes:
+          ssh kimiphone2.zt -p 2222
+

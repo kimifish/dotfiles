@@ -1,0 +1,9 @@
+name: remote
+windows:
+    - name: overview
+      root: /home/ubuntu
+      layout: main-vertical
+      panes:
+        - bash
+        - grc journalctl -f --priority=4 --unit=openvpn@server.service --unit=radicale.service --unit=taskd.service --unit=tor@default.service --unit=squid.service
+        - htop -d 30

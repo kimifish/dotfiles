@@ -1,0 +1,13 @@
+name: Apps
+root: ~/
+windows:
+  - music:
+      layout: main-horizontal
+      panes:
+        - ncmpcpp -c "/home/kimifish/.ncmpcpp/config-slave" -s visualizer
+        - ncmpcpp -s browser
+  - chats:
+      layout: main-horizontal
+      panes:
+        - weechat
+        - profanity

@@ -1,0 +1,76 @@
+highlight   clear
+
+highlight   Win          cterm=none           ctermfg=252   ctermbg=234
+highlight   OtherWin     cterm=none           ctermfg=252   ctermbg=234
+highlight   Border       cterm=none           ctermfg=252   ctermbg=234
+highlight   AuxWin       cterm=none           ctermfg=252   ctermbg=234
+
+highlight   TopLine      cterm=bold           ctermfg=185   ctermbg=235
+highlight   TopLineSel   cterm=bold           ctermfg=234   ctermbg=185
+
+highlight   CmdLine      cterm=none           ctermfg=71   ctermbg=232
+highlight   ErrorMsg     cterm=bold           ctermfg=160   ctermbg=234
+highlight   StatusLine   cterm=bold           ctermfg=185    ctermbg=235
+highlight   JobLine      cterm=bold           ctermfg=71    ctermbg=232
+highlight   SuggestBox   cterm=bold           ctermfg=71    ctermbg=232
+highlight   WildMenu     cterm=bold           ctermfg=71    ctermbg=232
+
+highlight   CurrLine     cterm=bold,inverse ctermfg=default  ctermbg=default
+highlight   OtherLine    cterm=bold         ctermfg=default ctermbg=235
+highlight   Selected     cterm=bold           ctermfg=170   ctermbg=235
+highlight   LineNr       cterm=none           ctermfg=160   ctermbg=234
+
+highlight   Directory    cterm=bold           ctermfg=254    ctermbg=234
+highlight   Link         cterm=none           ctermfg=183   ctermbg=234
+highlight   BrokenLink   cterm=none           ctermfg=160   ctermbg=234
+highlight   Socket       cterm=bold           ctermfg=140   ctermbg=234
+highlight   Device       cterm=none           ctermfg=125   ctermbg=234
+highlight   Fifo         cterm=none           ctermfg=74    ctermbg=234
+highlight   Executable   cterm=none           ctermfg=default   ctermbg=default
+
+" Mountable
+highlight {*.ssh,*.iso,*.img}
+        \ cterm=none, ctermfg=139, ctermbg=default
+
+" software documentation
+highlight {COPYRIGHT,COPYING*,BUGS,ChangeLog*,FAQ,INSTALL*,LICEN[CS]E,NEWS,
+          \README*,AUTHORS,TODO,THANKS}
+        \ cterm=none ctermfg=187 ctermbg=default
+" build system files
+highlight {Makefile,Makefile.am,Makefile.in,Makefile.win,*.mak,*.mk,
+          \CMakeLists.txt}
+        \ cterm=none ctermfg=121 ctermbg=default
+" archives
+highlight {*.7z,*.ace,*.arj,*.bz2,*.cpio,*.deb,*.dz,*.gz,*.jar,*.lzh,*.lzma,
+          \*.rar,*.rpm,*.rz,*.tar,*.taz,*.tb2,*.tbz,*.tbz2,*.tgz,*.tlz,*.trz,
+          \*.txz,*.tz,*.tz2,*.xz,*.z,*.zip,*.zoo,*.apk}
+        \ cterm=none ctermfg=247 ctermbg=default
+" documents
+highlight {*.djvu,*.htm,*.html,*.shtml,*.markdown,*.md,*[^0-9].[1-9],*.odt,
+          \*.mkd,*.org,*.pandoc,*.pdc,*.pdf,*.epub,*.fb2,*.tex,*.txt,*.xhtml,
+          \*.pptx,*.ppt,*.doc,*.docx,*.xls,*.xls[mx],*.mobi,*.pages,*.ods}
+        \ cterm=none ctermfg=229 ctermbg=default
+" media
+highlight {*.aac,*.anx,*.asf,*.au,*.avi,*.ts,*.axa,*.axv,*.divx,*.flac,*.m2a,
+          \*.m2v,*.m4a,*.m4p,*.m4v,*.mid,*.midi,*.mka,*.mkv,*.mov,*.mp3,*.mp4,
+          \*.flv,*.mp4v,*.mpc,*.mpeg,*.mpg,*.nuv,*.oga,*.ogg,*.ogv,*.ogx,*.pbm,
+          \*.pgm,*.qt,*.ra,*.ram,*.rm,*.spx,*.vob,*.wav,*.wma,*.wmv,*.xvid,
+          \*.ac3}
+        \ cterm=none ctermfg=199 ctermbg=default
+" images
+highlight {*.bmp,*.gif,*.jpeg,*.jpg,*.ico,*.png,*.ppm,*.svg,*.svgz,*.tga,*.tif,
+          \*.tiff,*.xbm,*.xcf,*.xpm,*.xspf,*.xwd,*.heic}
+        \ cterm=none ctermfg=211 ctermbg=default
+" executables
+"highlight {*.sh,*.bash,*.bat,*.btm,*.cmd,*.com,*.dll,*.exe,*.run,*.msu,*.msi}
+"        \ cterm=none ctermfg=77 ctermbg=default
+" source code
+highlight {*.patch,*.diff,*.py,*.[ch]pp,*.mk,*.c,*.h,*.[ch]pp,*.cc,*.hs,*.php,
+          \*.py,*.java,*.bash,*.zsh,*.css,*.xml,*.json}
+        \ cterm=none ctermfg=123 ctermbg=default
+" configs
+highlight {*.conf,*.cnf,*.ovpn,.*rc,.*.conf,*.yml,*.yaml,.profile,*config,*.vifm}
+          \ cterm=none ctermfg=73 ctermbg=default
+" backups
+highlight {*.bak,*~,.*.bak,.*~,*backup}
+          \ cterm=none ctermfg=237 ctermbg=default

@@ -1,0 +1,18 @@
+[Default Applications]
+text/html=qutebrowser.desktop
+x-scheme-handler/http=qutebrowser.desktop
+x-scheme-handler/https=qutebrowser.desktop
+x-scheme-handler/about=qutebrowser.desktop
+x-scheme-handler/unknown=qutebrowser.desktop
+x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
+image/png=qimgv.desktop
+x-scheme-handler/jetbrains-gateway=jetbrains-gateway.desktop
+x-scheme-handler/discord-529050037532098580=discord-529050037532098580.desktop
+image/jpeg=qimgv.desktop
+x-scheme-handler/fleet=jetbrains-fleet.desktop
+x-scheme-handler/hydralauncher=hydralauncher.desktop
+
+[Added Associations]
+image/png=qimgv.desktop;
+image/jpeg=qimgv.desktop;
+application/pdf=org.pwmt.zathura-pdf-poppler.desktop;

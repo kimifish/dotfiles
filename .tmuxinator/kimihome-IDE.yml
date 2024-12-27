@@ -1,0 +1,6 @@
+name: IDE
+windows:    
+    - 0:
+      layout: main-vertical
+      panes:
+        - 

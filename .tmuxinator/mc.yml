@@ -1,0 +1,8 @@
+name: mc
+root: ~/
+windows:
+  - office:
+      layout: main-horizontal
+      panes:
+        - mc
+        - mc

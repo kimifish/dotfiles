@@ -1,0 +1,9 @@
+name: local
+windows:
+  - name: 1
+    root: ~
+    layout: even-horizontal
+    panes:
+      - figlet -f small Hi!
+      - vifm
+

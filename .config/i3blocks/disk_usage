@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+ccol=#875f00
+pcol=#874000
+fgcol=#000000
+workdir="$HOME/.config/i3blocks/"
+
+d_crit=490
+d_warn=500
+
+if [[ -v BLOCK_BUTTON ]]; then
+    case "$BLOCK_BUTTON" in
+    	1) i3-msg exec 'gnome-terminal -e "ranger /media/kimifish/MediaStore" --role="htop" --geometry=160x50' ;;
+	#*) ;;
+    esac
+fi
+
+text=$(df --output=source,avail | grep "$@" | awk '{ print $2 }')
+warn_level=$(python3 -c "\
+import sys; \
+avail = $text / 1024 /1024; \
+warn = $d_warn; \
+crit = $d_crit; \
+if avail < crit:;  \
+	sys.exit('crit'); \
+elif avail < warn:;  \
+	sys.exit('warn'); \
+else:;  \
+	sys.exit('norm');\
+")
+if [ $warn_level -eq 'crit' ];then 
+	ccol="#ff0000"
+	pcol="#aa0000"
+elif [ $warn_level -eq 'warn' ]; then 
+    ccol="#d75f00"
+    pcol="#d74000"
+fi
+
+#text="<span stretch='condensed' size='small'>disk:</span>$text"
+$workdir/pango_markup.sh " $text" "$ccol" "$pcol" "$fgcol"

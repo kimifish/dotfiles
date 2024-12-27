@@ -1,0 +1,12 @@
+name: phone
+windows:
+    - name: shell
+      root: /home/kimifish
+      layout: main-vertical
+      panes:
+        - bash
+    - name: htop
+      root: /home/kimifish
+      layout: main-vertical
+      panes:
+        - htop -d 30
