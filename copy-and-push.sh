@@ -2,15 +2,15 @@
 
 # Define your dotfiles you want to copy
 declare -a DOTFILES=(
-    ".bashrc"
-    ".vimrc"
-    ".gitconfig"
-    ".zshrc"
-    ".bashrc.d"
-    ".xinitrc"
-    ".taskrc"
-    ".profile"
-    ".config/tmux/*.conf"
+    "~/.bashrc"
+    "~/.vimrc"
+    "~/.gitconfig"
+    "~/.zshrc"
+    "~/.bashrc.d"
+    "~/.xinitrc"
+    "~/.taskrc"
+    "~/.profile"
+    "~/.config/tmux/*.conf"
     # Add more dotfiles as needed
 )
 
@@ -21,14 +21,33 @@ DEST_DIR="$HOME/.config/dotfiles"
 mkdir -p "$DEST_DIR"
 
 # Copy dotfiles to the destination directory
-for FILE_R in "${DOTFILES[@]}"; do
-    FILE="$HOME/$FILE_R"
-    # Check if the file exists in the home directory
-    if [ -f "$FILE" ]; then
-        cp -u "$FILE" "$DEST_DIR/"
-        echo "Copied $FILE to $DEST_DIR/"
-    else
-        echo "Warning: $FILE does not exist and was not copied."
+# for FILE_R in "${DOTFILES[@]}"; do
+#     FILE="$HOME/$FILE_R"
+#     # Check if the file exists in the home directory
+#     if [ -f "$FILE" ]; then
+#         cp -u "$FILE" "$DEST_DIR/"
+#         echo "Copied $FILE to $DEST_DIR/"
+#     else
+#         echo "Warning: $FILE does not exist and was not copied."
+#     fi
+# done
+
+for PATTERN in "${DOTFILES[@]}"; do
+    # Use find to expand patterns
+    for FILE in $(eval "find $(dirname "$PATTERN") -maxdepth 1 -name '$(basename "$PATTERN")'"); do
+        if [ -f "$FILE" ]; then
+            cp -u "$FILE" "$DEST_DIR/"
+            echo "Copied file $FILE to $DEST_DIR/"
+        elif [ -d "$FILE" ]; then
+            # If it's a directory, copy the contents recursively
+            cp -ur "$FILE/" "$DEST_DIR/"
+            echo "Copied directory $FILE to $DEST_DIR/"
+        fi
+    done
+
+    # Handle empty directory case
+    if [[ -d "$PATTERN" && ! -d "$DEST_DIR/$(basename "$PATTERN")" ]]; then
+        echo "Warning: Directory $PATTERN is empty and was not copied."
     fi
 done
 

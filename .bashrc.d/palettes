@@ -1,0 +1,210 @@
+#!/bin/bash
+# vim: fdm=marker
+
+args=$1
+
+print_palette() {  # {{{
+    array=($palette)
+    # cr is Color range: 2 is truecolor, 5 - 256
+    if [ ${#array[0]} -ge 4 ]; then
+	cr="2"
+    else
+    	cr="5"
+    fi
+    echo -e "\e[0m Palette $counter"
+    printf "\e[38;${cr};${array[0]};48;${cr};${array[0]}m•0"
+    printf "\e[38;${cr};${array[1]};48;${cr};${array[0]}m•1"
+    printf "\e[38;${cr};${array[2]};48;${cr};${array[0]}m•2"
+    printf "\e[38;${cr};${array[3]};48;${cr};${array[0]}m•3"
+    printf "\e[38;${cr};${array[4]};48;${cr};${array[0]}m•4"
+    printf "\e[38;${cr};${array[5]};48;${cr};${array[0]}m•5"
+    echo -e "\e[0m"
+    printf "\e[38;${cr};${array[0]};48;${cr};${array[1]}m•0"
+    printf "\e[38;${cr};${array[1]};48;${cr};${array[1]}m•1"
+    printf "\e[38;${cr};${array[2]};48;${cr};${array[1]}m•2"
+    printf "\e[38;${cr};${array[3]};48;${cr};${array[1]}m•3"
+    printf "\e[38;${cr};${array[4]};48;${cr};${array[1]}m•4"
+    printf "\e[38;${cr};${array[5]};48;${cr};${array[1]}m•5"
+    echo -e "\e[0m"
+    printf "\e[38;${cr};${array[0]};48;${cr};${array[2]}m•0"
+    printf "\e[38;${cr};${array[1]};48;${cr};${array[2]}m•1"
+    printf "\e[38;${cr};${array[2]};48;${cr};${array[2]}m•2"
+    printf "\e[38;${cr};${array[3]};48;${cr};${array[2]}m•3"
+    printf "\e[38;${cr};${array[4]};48;${cr};${array[2]}m•4"
+    printf "\e[38;${cr};${array[5]};48;${cr};${array[2]}m•5"
+    echo -e "\e[0m"
+    printf "\e[38;${cr};${array[0]};48;${cr};${array[3]}m•0"
+    printf "\e[38;${cr};${array[1]};48;${cr};${array[3]}m•1"
+    printf "\e[38;${cr};${array[2]};48;${cr};${array[3]}m•2"
+    printf "\e[38;${cr};${array[3]};48;${cr};${array[3]}m•3"
+    printf "\e[38;${cr};${array[4]};48;${cr};${array[3]}m•4"
+    printf "\e[38;${cr};${array[5]};48;${cr};${array[3]}m•5"
+    echo -e "\e[0m"
+    printf "\e[38;${cr};${array[0]};48;${cr};${array[4]}m•0"
+    printf "\e[38;${cr};${array[1]};48;${cr};${array[4]}m•1"
+    printf "\e[38;${cr};${array[2]};48;${cr};${array[4]}m•2"
+    printf "\e[38;${cr};${array[3]};48;${cr};${array[4]}m•3"
+    printf "\e[38;${cr};${array[4]};48;${cr};${array[4]}m•4"
+    printf "\e[38;${cr};${array[5]};48;${cr};${array[4]}m•5"
+    echo -e "\e[0m"
+    printf "\e[38;${cr};${array[0]};48;${cr};${array[5]}m•0"
+    printf "\e[38;${cr};${array[1]};48;${cr};${array[5]}m•1"
+    printf "\e[38;${cr};${array[2]};48;${cr};${array[5]}m•2"
+    printf "\e[38;${cr};${array[3]};48;${cr};${array[5]}m•3"
+    printf "\e[38;${cr};${array[4]};48;${cr};${array[5]}m•4"
+    printf "\e[38;${cr};${array[5]};48;${cr};${array[5]}m•5"
+    printf "\e[0m"
+    echo
+    echo
+}
+# }}}
+
+PALETTE0_256="52 236 221 187 124"   # Root
+PALETTE0="43;45;66 92;99;120 217;4;41 141;153;174 239;35;60 237;242;244"   # Root
+PALETTE0_HEX="2B2D42 5C6378 D90429 8D99AE EF233C EDF2F4"   # Root
+#
+PALETTE1_256="17 24 65 137 187"  # The Great Wave off Kanagawa
+PALETTE1="12;40;64 28;74;96 112;176;166 196;169;135 251;223;168 252;236;196"  # The Great Wave off Kanagawa
+PALETTE1_HEX="0C2840 1C4A60 C4A987 70B0A6 FBDFA8 FCECC4"  # The Great Wave off Kanagawa
+
+PALETTE2_256="17 130 22 66 109"  # A Sunday Afternoon
+PALETTE2="59;69;93 155;67;37 52;130;48 210;197;52 162;197;225 254;245;209"  # A Sunday Afternoon
+PALETTE2_HEX="3B455D 9B4325 348230 D2C534 A2C5E1 FEF5D1"  # A Sunday Afternoon
+
+PALETTE3_256="24 30 130 208 214" # The Scream
+PALETTE3="67;54;46 35;51;82 98;116;94 184;90;52 200;148;98 244;205;106" # The Scream
+PALETTE3_HEX="43362E 233352 62745E B85A34 C89462 F4CD6A" # The Scream
+
+PALETTE4_256="234 52 94 130 143" # Mona Lisa
+PALETTE4="49;29;40 134;71;50 97;104;60 161;162;104 202;178;98 237;211;122" # Mona Lisa
+PALETTE4_HEX="311D28 864732 61683C A1A268 CAB262 EDD37A" # Mona Lisa
+
+PALETTE5="234 18 24 142 186" # Starry Night
+#
+#PALETTE6="52 58 28 136 220"  # The Kiss
+#PALETTE6="114;39;2 76;78;17 81;108;48 214;157;48 239;188;34 42;21;8"  # The Kiss
+#PALETTE6_HEX="722702 4C4E11 516C30 D69D30 EFBC22 2A1508"  # The Kiss
+PALETTE6="42;21;8 114;39;2 76;78;17 81;108;48 214;157;48 239;188;34"  # The Kiss
+PALETTE6_HEX="2A1508 722702 4C4E11 516C30 D69D30 EFBC22"  # The Kiss
+
+PALETTE7="52 31 172 130 230" # The Persistence of Memory
+PALETTE8="22 23 30 73 221"   # Water Lilies
+PALETTE9="52 33 132 92 230" # The Persistence of Memory
+
+PALETTE10="39;42;64 96;82;86 177;124;149 89;187;209 236;206;126 216;221;204" # Cyberpunk Girl
+PALETTE10_HEX="272A40 605256 B17C95 59BBD1 ECCE7E D8DDCC"
+
+if [[ "$args" == "show" ]]; then
+    counter=1
+    echo
+    for palette in "$PALETTE0" "$PALETTE1" "$PALETTE2" "$PALETTE3" "$PALETTE4" "$PALETTE5" "$PALETTE6" "$PALETTE7" "$PALETTE8" "$PALETTE9" "$PALETTE10"
+    do
+	print_palette 
+	counter=$[$counter +1]
+    done
+    exit 0
+fi
+
+
+if [ "$EUID" -ne 0 ] || [ "$GIVE_ME_PALETTES" -eq 1 ]; then
+case $(hostname) in
+    kimipc)    	export PALETTE=$PALETTE1
+		export PALETTE_HEX=$PALETTE1_HEX
+		export PALETTE_COLOR_RANGE=2   # 2 - Truecolor, 5 - 256
+		;;
+    kimitop)	export PALETTE=$PALETTE6
+		export PALETTE_HEX=$PALETTE6_HEX
+		export PALETTE_COLOR_RANGE=2   # 2 - Truecolor, 5 - 256
+		;;
+    kimisus)	export PALETTE=$PALETTE4
+		export PALETTE_COLOR_RANGE=5   # 2 - Truecolor, 5 - 256
+		;;
+    wonderwaffle)	export PALETTE=$PALETTE7 
+			export PALETTE_COLOR_RANGE=5   # 2 - Truecolor, 5 - 256
+			;;
+    soundmaster)	export PALETTE=$PALETTE9 
+			export PALETTE_COLOR_RANGE=5   # 2 - Truecolor, 5 - 256
+			;;
+    f2-lr-sound)	export PALETTE=$PALETTE9
+			export PALETTE_COLOR_RANGE=5   # 2 - Truecolor, 5 - 256
+			;;
+    kimihome)	export PALETTE=$PALETTE3
+		export PALETTE_HEX=$PALETTE3_HEX
+		export PALETTE_COLOR_RANGE=2   # 2 - Truecolor, 5 - 256
+		;;
+    kimipad)	export PALETTE=$PALETTE2
+		export PALETTE_COLOR_RANGE=5   # 2 - Truecolor, 5 - 256
+		;;
+    Vault)	    export PALETTE=$PALETTE5 
+		    export PALETTE_COLOR_RANGE=5   # 2 - Truecolor, 5 - 256
+		    ;;
+    ip-*|AWS|amnezia|xray)	export PALETTE=$PALETTE8 
+				export PALETTE_COLOR_RANGE=5   # 2 - Truecolor, 5 - 256
+				;;
+    *) ;;
+esac
+else
+	export PALETTE=$PALETTE0
+	export PALETTE_HEX=$PALETTE0_HEX
+	export PALETTE_COLOR_RANGE=2
+fi
+
+plt=($PALETTE)
+plt_hex=($PALETTE_HEX)
+export PAL_COL0=${plt[0]}
+export PAL_COL1=${plt[1]}
+export PAL_COL2=${plt[2]}
+export PAL_COL3=${plt[3]}
+export PAL_COL4=${plt[4]}
+export PAL_COL5=${plt[5]}
+
+export PAL_ROFI_COL0="#${plt_hex[0]}FF"
+export PAL_ROFI_COL1="#${plt_hex[1]}FF"
+export PAL_ROFI_COL2="#${plt_hex[2]}FF"
+export PAL_ROFI_COL3="#${plt_hex[3]}FF"
+export PAL_ROFI_COL4="#${plt_hex[4]}FF"
+export PAL_ROFI_COL5="#${plt_hex[5]}FF"
+
+if [ $PALETTE_COLOR_RANGE -eq 2 ]; then
+    export PAL_TMUX_COL0="#${plt_hex[0]}"
+    export PAL_TMUX_COL1="#${plt_hex[1]}"
+    export PAL_TMUX_COL2="#${plt_hex[2]}"
+    export PAL_TMUX_COL3="#${plt_hex[3]}"
+    export PAL_TMUX_COL4="#${plt_hex[4]}"
+    export PAL_TMUX_COL5="#${plt_hex[5]}"
+elif [ $PALETTE_COLOR_RANGE -eq 5 ]; then
+    export PAL_TMUX_COL0="colour${plt[0]}"
+    export PAL_TMUX_COL1="colour${plt[1]}"
+    export PAL_TMUX_COL2="colour${plt[2]}"
+    export PAL_TMUX_COL3="colour${plt[3]}"
+    export PAL_TMUX_COL4="colour${plt[4]}"
+    export PAL_TMUX_COL5="colour${plt[5]}"
+fi
+# ROFI {{{
+# Don't know how to use env vars in ROFI config, so creating it here.
+#
+cat > $HOME/.config/rofi/colors/dynamic.rasi <<EOL
+* {
+    background:     $PAL_ROFI_COL2;
+    background-alt: $PAL_ROFI_COL3;
+    foreground:     $PAL_ROFI_COL4;
+    selected:       $PAL_ROFI_COL4;
+    active:         $PAL_ROFI_COL3;
+    urgent:         #FF0000FF;
+}
+EOL
+# }}}
+# i3 env file {{{
+# Don't know how to use env vars in ROFI config, so creating it here.
+#
+cat > /tmp/palette.env <<EOL
+PAL_TMUX_COL0=$PAL_TMUX_COL0
+PAL_TMUX_COL1=$PAL_TMUX_COL1
+PAL_TMUX_COL2=$PAL_TMUX_COL2
+PAL_TMUX_COL3=$PAL_TMUX_COL3
+PAL_TMUX_COL4=$PAL_TMUX_COL4
+PAL_TMUX_COL5=$PAL_TMUX_COL5
+EOL
+# }}}
+
+echo

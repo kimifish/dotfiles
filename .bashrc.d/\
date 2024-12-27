@@ -1,0 +1,23 @@
+#!/bin/bash
+
+PALETTE1="17 24 72 144 137"  # The Great Wave off Kanagawa
+PALETTE2="53:66:109:100:22"  # A Sunday Afternoon
+PALETTE3="30:24:166:214:208" # The Scream
+PALETTE4="234:52:94:130:143" # Mona Lisa
+PALETTE5="18:25:143:142:234" # Starry Night
+PALETTE6="52:58:28:136:220"  # The Kiss
+PALETTE7="31:230:172:130:52" # The Persistence of Memory
+PALETTE8="23:67:30:64:221"   # Water Lilies
+PALETTE="23:67:30:64:221"   # Water Lilies
+
+_bg() {
+       #printf "\[\033[48;5;$1m\]"
+       printf "\033[48;5;$1m"
+       }
+
+array=($PALETTE)
+#readarray -td, a <<<"$PALETTE,"; unset 'a[-1]'; declare -p a;
+for element in "${a[@]}"
+do
+ echo "$(_bg $element)$element"
+done

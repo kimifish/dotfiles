@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export MPD_HOST="REql3D/b@127.0.0.1"
+export MPD_PORT="6600"
+export MUSIC_DIR="/home/kimifish/Музыка"

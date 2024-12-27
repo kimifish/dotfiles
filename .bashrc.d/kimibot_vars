@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export KIMIBOT_IP="kimipc.vpn"
+export KIMIBOT_PORT="5101"

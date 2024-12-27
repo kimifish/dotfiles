@@ -1,0 +1,266 @@
+#!/bin/bash
+# vim: fdm=marker
+dvdr=""
+dvdr=""
+dvdr=""
+dvdr=""
+dvdr=""
+dvdr=""
+dvdr=""
+dvdr=""
+
+_entry() {  # {{{
+    out_str=""
+    entry_text="$1"
+    s_fg="$2"
+    s_bg="$3"
+    #if [[ "$entry_text" == "" ]]; then
+    #    out_str+="\[\033[0m\]"
+    #fi
+    if [ ${#s_fg} -ge 4 ]; then
+	fgcol_r="2"
+    else
+	fgcol_r="5"
+    fi
+    if [ ${#s_bg} -ge 4 ]; then
+	bgcol_r="2"
+    else
+	bgcol_r="5"
+    fi
+    out_str+="\[\033[48;${bgcol_r};${s_bg}m\]"
+    out_str+=$dvdr  #""
+    out_str+="\[\033[38;${fgcol_r};${s_fg};48;${bgcol_r};${s_bg}m\]"
+    out_str+="${entry_text}"
+    out_str+="\[\033[m\]\[\033[38;${bgcol_r};${s_bg}m\]"
+    printf "${out_str}"
+}  # }}}
+_exit_code() {   # {{{
+    prev_exit="$1"
+
+    # Replacing common exit codes with meaningful (LOL) symbols
+    case "$prev_exit" in
+	1) 	prev_exit="" ;;
+	2)	prev_exit="?" ;;
+	#3)	prev_exit="No such process" ;;
+	#4)	prev_exit="Interrupted syscall" ;;
+	#5)	prev_exit="I/O error" ;;
+	#6)	prev_exit="No such dev/addr" ;;
+	#7)	prev_exit="Too long" ;;
+	#8)	prev_exit="Exec format err" ;;
+	#9)	prev_exit="Bad descriptor" ;;
+	#10)	prev_exit="No childs" ;;
+	#11)	prev_exit="Rsrc unavail" ;;
+	#12)	prev_exit="No memory" ;;
+	#13)	prev_exit="Perm_denied" ;;
+	#14)	prev_exit="Bad addr" ;;
+	#16)	prev_exit="Dev/resrc busy" ;;
+	#17)	prev_exit="File exists" ;;
+	#18)	prev_exit="Bad cross-dev link" ;;
+	#19)	prev_exit="No such dev" ;;
+	#20)	prev_exit="Not a dir" ;;
+	#21)	prev_exit="Is a dir" ;;
+	#22)	prev_exit="Bad arg" ;;
+	#23)	prev_exit="Too many files" ;;
+	#24)	prev_exit="Too many files" ;;
+	#26)	prev_exit="Text file busy" ;;
+	#27)	prev_exit="File too large" ;;
+	#28)	prev_exit="No space" ;;
+	#30)	prev_exit="r/o FS" ;;
+	#31)	prev_exit="Too many links" ;;
+	#32)	prev_exit="Broken pipe" ;;
+	#36)	prev_exit="Name too long" ;;
+	#38)	prev_exit="No func" ;;
+	#39)	prev_exit="Dir not empty" ;;
+	#40)	prev_exit="Too many levels of links" ;;
+	#100)	prev_exit="Net is down" ;;
+	#101)	prev_exit="Net unreachable" ;;
+	#104)	prev_exit="Conn reset on peer" ;;
+	#110)	prev_exit="Conn timeout" ;;
+	#111)	prev_exit="Conn refused" ;;
+	#112)	prev_exit="Host is down" ;;
+	#113)	prev_exit="No route" ;;
+	#114)	prev_exit="Operation in progress" ;;
+	#115)	prev_exit="Operation in progress" ;;
+	#121)	prev_exit="Remote i/o error" ;;
+	#122)	prev_exit="Disk quota exceeded" ;;
+	#125)	prev_exit="Operation canceled" ;;
+	126)	prev_exit="" ;;
+	127)	prev_exit="" ;;
+	128)	prev_exit="code" ;;
+	130)	prev_exit="^C" ;;
+	*)	: ;;
+    esac
+
+    #Composing red ending if non-zero code
+    ending=""
+    if [[ "$prev_exit" != "0" ]]; then
+	ending="${ending}$(_entry ${prev_exit} ${err_fg} ${err_bg})"
+    fi
+    #ending="${ending}$(_entry '' 7 0 0)"
+
+    # Returning ready ending
+    printf "$ending"
+} # }}}
+_jobs() {  #{{{
+    local jobs_fg="$1"
+    local jobs_bg="$2"
+    local jobs_out_str=""
+    
+    if [[ "$jcount" != "0" ]]; then
+	local jobs_out_str="$jobs_out_str$(_entry $jcount $jobs_fg $jobs_bg)"
+    fi
+
+    # Returning ready ending
+    printf "$jobs_out_str"
+}  #}}}
+_git_status() {  #{{{
+	sep=""
+    git_fg="$1"
+    git_bg="$2"
+    git_fg2="$3"
+    local git_str=""
+    GSP="$(git status --porcelain -uno -b 2>/dev/null)"
+    GDir="$(git rev-parse --show-toplevel 2>/dev/null)"
+
+    local GSPb=$(awk '/##/ {print $2}' <<< "$GSP")
+	local GSPbcut=${GSPb:0:6}
+    if [[ "$GSPb" != "" ]]; then
+	case "$GSPbcut" in
+	    master) 	GSPb="M" ;;
+		main..)     GSPb="m" ;;
+	    *)		: ;;
+	esac
+	git_str+="$GSPb"
+    fi
+    # GSP Modified
+    local GSPm="$(grep -c "^ M" <<< "${GSP}")"
+    if [[ "${GSPm}" > "0" ]]; then
+	git_str+="\[\e[38;${col_r};${git_fg2}m\]≠${GSPm}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Modified
+    fi
+
+    ## GSP Deleted
+    local GSPd="$(grep -c "^ D" <<< "${GSP}")"
+    if [[ "${GSPd}" -gt "0" ]]; then
+	git_str+="\[\e[38;${col_r};${git_fg2}m\]x${GSPd}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Deleted
+    fi
+
+    ## GSP Added
+    local GSPa="$(grep -c "^ A" <<< "${GSP}")"
+    if [[ "${GSPa}" -gt "0" ]]; then
+	git_str+="\[\e[38;${col_r};${git_fg2}m\]✚${GSPa}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Added
+    fi
+
+    ## GSP Renamed
+    local GSPr="$(grep -c "^ R" <<< "${GSP}")"
+    if [[ "${GSPr}" -gt "0" ]]; then
+	git_str+="\[\e[38;${col_r};${git_fg2}m\]☇${GSPr}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Renamed
+    fi
+
+    ## GSP Untracked
+    local GSPu="$(grep -c "^\?" <<< "${GSP}")"
+    if [[ "${GSPu}" -gt "0" ]]; then
+	if [[ "$GDir" != "$HOME" ]]; then
+	    git_str+="\[\e[38;${col_r};${git_fg2}m\]?${GSPu}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Untracked
+	fi
+    fi
+    
+    if [[ "$git_str" != "" ]]; then 
+	local git_out_str="$(_entry ${git_str} ${git_fg} ${git_bg})"
+	printf "${git_out_str}"
+    fi
+
+}  #}}}
+_venv_status() {  #{{{
+    sep=""
+    venv_fg="$1"
+    venv_bg="$2"
+    #venv_fg2="$3"
+   if test -z "$VIRTUAL_ENV" ; then
+       text=""
+   else
+       text=''
+       venv_str=`_entry "${text}" ${venv_fg} ${venv_bg}`
+       printf "$venv_str"
+   fi
+}  #}}}
+_vifm_status() {  #{{{
+    sep=""
+    vifm_fg="$1"
+    vifm_bg="$2"
+    #venv_fg2="$3"
+   if test -z "$INSIDE_VIFM" ; then
+       text=""
+   else
+       text=''
+       vifm_str=`_entry "${text}" ${vifm_fg} ${vifm_bg}`
+       printf "$vifm_str"
+   fi
+}  #}}}
+
+
+__prompt_command() {
+
+    # Remembering last command exit code
+    prev_exit="$?"
+    # Counting jobs background
+    local jcount="$(jobs | wc -l)"
+
+    color_prompt=yes
+    # uncomment for a colored prompt, if the terminal has the capability; turned
+    # off by default to not distract the user: the focus in a terminal window
+    # should be on the output of commands, not on the prompt
+    force_color_prompt=yes
+
+    if [[ -n "$force_color_prompt" ]]; then
+	if [[ -x /usr/bin/tput ]] && tput setaf 1 >&/dev/null; then
+	    # We have color support; assume it's compliant with Ecma-48
+	    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	    # a case would tend to support setf rather than setaf.)
+	    color_prompt=yes
+	else
+	    color_prompt=
+	fi
+    fi
+
+    if [[ "$color_prompt" == yes ]]; then
+	prev_bg="0"
+	plt=($PALETTE)
+	# col_r is Color Range: 2 is Truecolor, 5 is 256
+	if [ ${#plt[0]} -ge 4 ]; then
+	    col_r="2"
+	else
+	    col_r="5"
+	fi
+	def_col="\[\033[00m\]"
+	err_bg="88"
+	err_fg="179"
+	user=$(whoami)
+	[[ "$user" == "kimifish" ]] && user="ﱃ"
+	[[ "$user" == "pi" ]] && user="π"
+
+	PS1="\[\e[38;${col_r};${plt[2]}m\]"
+	PS1+="$(_jobs ${plt[4]} ${plt[2]})"
+	PS1+="$(_entry ${user} ${plt[1]} ${plt[4]})"     # User entry
+	PS1+="$(_entry '\\h' ${plt[0]} ${plt[3]})"      # Host entry
+	PS1+="$(_git_status ${plt[4]} ${plt[1]} ${plt[0]})"      # Current dir entry
+	PS1+="$(_entry '\\w' ${plt[3]} ${plt[1]})"      # Current dir entry
+	PS1+="$(_venv_status 32 221)"      # Current venv 
+	PS1+="$(_vifm_status 247 25)"      # Current venv 
+	PS1+="$(_exit_code $prev_exit)"                            # Exit code entry
+	PS1+="$(_entry '' 0 0)"
+
+	PS1="${PS1}$def_col "
+
+	#unset plt def_col usr_cl sep_1 hst_cl sep_2 cwd_cl sep_3
+
+    else
+	# Bad luck, no colors. What r u doing here, m?
+	if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
+	    debian_chroot=$(cat /etc/debian_chroot)
+	fi
+	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+
+    fi
+    unset color_prompt force_color_prompt
+}
+export __prompt_command
