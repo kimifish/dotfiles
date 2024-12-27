@@ -15,6 +15,7 @@ declare -a DOTFILES=(
     ".config/nvim/lua/base/"
     ".config/nvim/lua/plugins/"
     ".config/nvim/lua/lsp/"
+    ".config/i3/config"
     # Add more dotfiles as needed
 )
 
