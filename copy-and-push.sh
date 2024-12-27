@@ -44,8 +44,8 @@ for PATTERN in "${DOTFILES[@]}"; do
             # Determine the relative path to maintain directory structure
             REL_PATH=$(realpath --relative-to="$(dirname "$PATTERN")" "$FILE")
             DEST_PATH="$DEST_DIR/$(dirname "$PATTERN")/$REL_PATH"
-            echo "REL_PATH: REL_PATH"
-            echo "DEST_PATH: DEST_PATH"
+            echo "REL_PATH: $REL_PATH"
+            echo "DEST_PATH: $DEST_PATH"
             # Create the destination directory if it doesn't exist
             mkdir -p "$(dirname "$DEST_PATH")"
             cp -u "$FILE" "$DEST_PATH"
