@@ -11,6 +11,7 @@ declare -a DOTFILES=(
     ".taskrc"
     ".profile"
     ".config/tmux/*.conf"
+    ".config/nvim/lua/base/*.lua"
     # Add more dotfiles as needed
 )
 
@@ -50,7 +51,7 @@ for PATT in "${DOTFILES[@]}"; do
             # Create the destination directory if it doesn't exist
             # mkdir -p "$(dirname "$DEST_PATH")"
             # cp -u "$FILE" "$DEST_PATH"
-            echo "Copied file $FILE to $DEST_PATH/"
+            echo "Copied file $FILE to $DEST_PATH"
         elif [ -d "$FILE" ]; then
             # Copy the entire directory while preserving structure
             # cp -ur "$FILE/" "$DEST_DIR/$FILE/"
