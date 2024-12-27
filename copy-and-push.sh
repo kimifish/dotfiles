@@ -47,15 +47,15 @@ for PATT in "${DOTFILES[@]}"; do
         echo "ORIGIN: $FILE"
         if [ -f "$FILE" ]; then
             # Determine the relative path to maintain directory structure
-            DEST_PATH="$DEST_DIR/$(dirname "$PATT")/$(basename "$FILE")"
+            DEST_PATH="$DEST_DIR/$REL_PATH/$(basename "$FILE")"
             echo "DEST_PATH: $DEST_PATH"
             # Create the destination directory if it doesn't exist
-            # mkdir -p "$(dirname "$DEST_PATH")"
-            # cp -u "$FILE" "$DEST_PATH"
+            mkdir -p "$(dirname "$DEST_PATH")"
+            cp -u "$FILE" "$DEST_PATH"
             echo "Copied file $FILE to $DEST_PATH"
         elif [ -d "$FILE" ]; then
             # Copy the entire directory while preserving structure
-            # cp -ur "$FILE/" "$DEST_DIR/$FILE/"
+            cp -ur "$FILE" "$DEST_DIR/$REL_PATH/"
             echo "Copied directory $FILE to $DEST_DIR/"
         fi
     done
