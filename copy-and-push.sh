@@ -32,24 +32,36 @@ mkdir -p "$DEST_DIR"
 #     fi
 # done
 
+# Copy dotfiles and directories to the destination directory
 for PATTERN in "${DOTFILES[@]}"; do
     # Use find to expand patterns
-    for FILE in $(eval "find $(dirname "$PATTERN") -maxdepth 1 -name '$(basename "$PATTERN")'"); do
+    echo $PATTERN
+    eval_string="find $(dirname "$PATTERN") -maxdepth 1 -name '$(basename "$PATTERN")'"
+    # for FILE in $(eval "find $(dirname "$PATTERN") -name '$(basename "$PATTERN")'"); do
+    for FILE in $(eval "$eval_string"); do
+        echo $FILE
         if [ -f "$FILE" ]; then
-            cp -u "$FILE" "$DEST_DIR/"
-            echo "Copied file $FILE to $DEST_DIR/"
+            # Determine the relative path to maintain directory structure
+            REL_PATH=$(realpath --relative-to="$(dirname "$PATTERN")" "$FILE")
+            DEST_PATH="$DEST_DIR/$(dirname "$PATTERN")/$REL_PATH"
+            echo "REL_PATH: REL_PATH"
+            echo "DEST_PATH: DEST_PATH"
+            # Create the destination directory if it doesn't exist
+            mkdir -p "$(dirname "$DEST_PATH")"
+            cp -u "$FILE" "$DEST_PATH"
+            echo "Copied file $FILE to $DEST_PATH/"
         elif [ -d "$FILE" ]; then
-            # If it's a directory, copy the contents recursively
-            cp -ur "$FILE/" "$DEST_DIR/"
+            # Copy the entire directory while preserving structure
+            cp -ur "$FILE/" "$DEST_DIR/$FILE/"
             echo "Copied directory $FILE to $DEST_DIR/"
         fi
     done
-
-    # Handle empty directory case
-    if [[ -d "$PATTERN" && ! -d "$DEST_DIR/$(basename "$PATTERN")" ]]; then
-        echo "Warning: Directory $PATTERN is empty and was not copied."
-    fi
 done
+    # Handle empty directory case
+#     if [[ -d "$PATTERN" && ! -d "$DEST_DIR/$(basename "$PATTERN")" ]]; then
+#         echo "Warning: Directory $PATTERN is empty and was not copied."
+#     fi
+# done
 
 # Change to the dotfiles directory
 cd "$DEST_DIR" || { echo "Failed to change directory to $DEST_DIR"; exit 1; }
