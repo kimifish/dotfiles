@@ -12,6 +12,7 @@ declare -a DOTFILES=(
     ".profile"
     ".config/tmux/*.conf"
     ".config/nvim/lua/base/*.lua"
+    ".config/nvim/lua/plugins/"
     # Add more dotfiles as needed
 )
 
