@@ -37,16 +37,15 @@ for PATT in "${DOTFILES[@]}"; do
     PATTERN="$HOME/$PATT"
     REL_PATH="$(dirname "$PATT")"
     # Use find to expand patterns
-    echo $PATTERN
+    echo "PATTERN: $PATTERN"
+    echo "REL_PATH: $REL_PATH"
     eval_string="find $(dirname "$PATTERN") -maxdepth 1 -name '$(basename "$PATTERN")'"
     # for FILE in $(eval "find $(dirname "$PATTERN") -name '$(basename "$PATTERN")'"); do
     for FILE in $(eval "$eval_string"); do
-        echo $FILE
+        echo "ORIGIN: $FILE"
         if [ -f "$FILE" ]; then
             # Determine the relative path to maintain directory structure
-            # REL_PATH=$(realpath --relative-to="$(dirname "$PATTERN")" "$FILE")
             DEST_PATH="$DEST_DIR/$(dirname "$PATT")/$(basename "$FILE")"
-            # echo "REL_PATH: $REL_PATH"
             echo "DEST_PATH: $DEST_PATH"
             # Create the destination directory if it doesn't exist
             # mkdir -p "$(dirname "$DEST_PATH")"
