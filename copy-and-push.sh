@@ -11,8 +11,10 @@ declare -a DOTFILES=(
     ".taskrc"
     ".profile"
     ".config/tmux/*.conf"
-    ".config/nvim/lua/base/*.lua"
+    ".config/nvim/init.lua"
+    ".config/nvim/lua/base/"
     ".config/nvim/lua/plugins/"
+    ".config/nvim/lua/lsp/"
     # Add more dotfiles as needed
 )
 
