@@ -2,15 +2,15 @@
 
 # Define your dotfiles you want to copy
 declare -a DOTFILES=(
-    "~/.bashrc"
-    "~/.vimrc"
-    "~/.gitconfig"
-    "~/.zshrc"
-    "~/.bashrc.d"
-    "~/.xinitrc"
-    "~/.taskrc"
-    "~/.profile"
-    "~/.config/tmux/*.conf"
+    ".bashrc"
+    ".vimrc"
+    ".gitconfig"
+    ".zshrc"
+    ".bashrc.d"
+    ".xinitrc"
+    ".taskrc"
+    ".profile"
+    ".config/tmux/*.conf"
     # Add more dotfiles as needed
 )
 
@@ -33,7 +33,9 @@ mkdir -p "$DEST_DIR"
 # done
 
 # Copy dotfiles and directories to the destination directory
-for PATTERN in "${DOTFILES[@]}"; do
+for PATT in "${DOTFILES[@]}"; do
+    PATTERN="$HOME/$PATT"
+    REL_PATH="$(dirname "$PATT")"
     # Use find to expand patterns
     echo $PATTERN
     eval_string="find $(dirname "$PATTERN") -maxdepth 1 -name '$(basename "$PATTERN")'"
@@ -42,17 +44,17 @@ for PATTERN in "${DOTFILES[@]}"; do
         echo $FILE
         if [ -f "$FILE" ]; then
             # Determine the relative path to maintain directory structure
-            REL_PATH=$(realpath --relative-to="$(dirname "$PATTERN")" "$FILE")
-            DEST_PATH="$DEST_DIR/$(dirname "$PATTERN")/$REL_PATH"
-            echo "REL_PATH: $REL_PATH"
+            # REL_PATH=$(realpath --relative-to="$(dirname "$PATTERN")" "$FILE")
+            DEST_PATH="$DEST_DIR/$(dirname "$PATT")/$(basename "$FILE")"
+            # echo "REL_PATH: $REL_PATH"
             echo "DEST_PATH: $DEST_PATH"
             # Create the destination directory if it doesn't exist
-            mkdir -p "$(dirname "$DEST_PATH")"
-            cp -u "$FILE" "$DEST_PATH"
+            # mkdir -p "$(dirname "$DEST_PATH")"
+            # cp -u "$FILE" "$DEST_PATH"
             echo "Copied file $FILE to $DEST_PATH/"
         elif [ -d "$FILE" ]; then
             # Copy the entire directory while preserving structure
-            cp -ur "$FILE/" "$DEST_DIR/$FILE/"
+            # cp -ur "$FILE/" "$DEST_DIR/$FILE/"
             echo "Copied directory $FILE to $DEST_DIR/"
         fi
     done
