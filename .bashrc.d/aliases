@@ -43,6 +43,7 @@ alias iptables='sudo $colored iptables'
 alias iptl='sudo $colored iptables -L -n -v --line-numbers'
 alias find='fdfind'
 alias vact='source .venv/bin/activate'
+alias ZZ='i3-msg kill'
 # }}}
 # ls & exa {{{
 dirs1="--group-directories-first"

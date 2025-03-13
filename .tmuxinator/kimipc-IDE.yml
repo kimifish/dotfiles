@@ -1,4 +1,4 @@
-name: IDE
+name: IDE main
 windows:    
   - main:
       root: ~/bin 

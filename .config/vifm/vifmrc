@@ -173,6 +173,22 @@ command! reload :write | restart
 command RenewFileInfo :execute 'set' 'viewcolumns="' . $VIFM_SHOW_NAME . ',' . $VIFM_SHOW_SIZE . ',' . $VIFM_SHOW_PERMS . ',' . $VIFM_SHOW_MTIME . '"'
 RenewFileInfo
 
+" RenewFileTree
+" command ChangeFilesInTreeViewer :
+"     \| if executable('eza')
+"     \| echo '-='.$VIFM_SHOW_FILES_IN_TREE.'=-'
+"     \|    execute 'fileviewer' '*/' 'eza -Tl' . $VIFM_SHOW_FILES_IN_TREE . ' --color-scale=all --no-time --no-permissions --no-user --total-size --color=always --icons=always --follow-symlinks %c'
+"     \|    execute 'fileviewer' '.*/' 'eza -Tl' . $VIFM_SHOW_FILES_IN_TREE . ' --color-scale=all --no-time --no-permissions --no-user --total-size --color=always --icons=always --follow-symlinks %c'
+"     \| elseif executable('tree')
+"     \| echo 'here'
+"     " \|    fileviewer */ tree -hC --du %c
+"     " \|    fileviewer .*/ tree -hC --du %c
+"     \| else
+"     \| echo 'here'
+"     " \|    fileviewer */ ls -l %c
+"     \| endif
+let $VIFM_SHOW_FILES_IN_TREE = 'D'  " Show only dirs, not files
+
 command SwitchMtime :
     \| if $VIFM_SHOW_MTIME == ''
     \| let $VIFM_SHOW_MTIME = '13{mtime}'
@@ -196,6 +212,19 @@ command SwitchSize :
     \| let $VIFM_SHOW_SIZE = ''
     \| endif
     \| RenewFileInfo
+
+command SwitchFilesInTree :
+    \| if $VIFM_SHOW_FILES_IN_TREE == ''
+    \| let $VIFM_SHOW_FILES_IN_TREE = 'D'
+    \| echo "Files hidden from tree."
+    \| else
+    \| let $VIFM_SHOW_FILES_IN_TREE = ''
+    \| echo "Files now shown in tree."
+    \| endif
+    " \| ChangeFilesInTreeViewer
+
+command OpenInVimLower :
+    \| !tmux split-window -v -c "#{pane_current_path}" vim %f
 
 " }}}
 
@@ -451,13 +480,12 @@ filextype */
 "
 " Directories
 if executable('eza')
-   fileviewer */ eza -TlD --color-scale=all --no-time --no-permissions --no-user --total-size --color=always --icons=always --follow-symlinks %c
-   fileviewer .*/ eza -TlD --color-scale=all --no-time --no-permissions --no-user --total-size --color=always --icons=always --follow-symlinks %c
+   execute 'fileviewer' '*/' 'eza -Tl$VIFM_SHOW_FILES_IN_TREE --color-scale=all --no-time --no-permissions --no-user --total-size --color=always --icons=always --follow-symlinks %c'
+   execute 'fileviewer' '.*/' 'eza -Tl$VIFM_SHOW_FILES_IN_TREE --color-scale=all --no-time --no-permissions --no-user --total-size --color=always --icons=always --follow-symlinks %c'
 elseif executable('tree')
-   fileviewer */ tree -hC --du %c
-   fileviewer .*/ tree -hC --du %c
+   execute 'fileviewer' '*/' 'tree -hC --du %c'
+   execute 'fileviewer' '.*/' 'tree -hC --du %c'
 endif
-
 
 " Man page
 fileviewer *.[1-8] man ./%c | col -b
@@ -519,6 +547,7 @@ fileviewer *.sh,*.bash,*.zsh,.profile,.bashrc,.zshrc highlight -O xterm256 -s da
 fileviewer *.ovpn highlight -O xterm256 -s dante --syntax conf %c
 fileviewer *.xml,*.csproj,*.dtd,*.ecf,*.ent,*.glade,*.hdr,*.hub,*.jnlp,*.nrm,*.resx,*.sgm,*.sgml,*.tld,*.vxml,*.wml,*.xsd,*.xsl highlight -O xterm256 -s dante --syntax xml %c
 fileviewer *.conf,.*rc,.*conf,*rc highlight -O xterm256 -s dante --syntax conf %c
+fileviewer *.ini highlight -O xterm256 -s dante --syntax ini %c
 fileviewer *.html,*.htm highlight -O xterm256 -s dante --syntax html %c
 
 "
@@ -550,7 +579,8 @@ nnoremap <A-k>       <C-w>w5k<C-w>w
 nnoremap <Esc>j   <C-w>w10j<C-w>w
 
 " Open file in existing instance of gvim
-nnoremap o :!vim --remote-tab-silent %f<cr>
+" nnoremap o :!vim --remote-tab-silent %f<cr>
+nnoremap o :!tmux split-window -v -c "#{pane_current_pane}" vim %f<cr>
 " Open file in new instance of gvim
 nnoremap O :!vim %f<cr>
 

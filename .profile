@@ -136,3 +136,4 @@ fi
 
 # echo "========== Exiting .profile ==========" 
 
+. "/home/kimifish/.local/share/cargo/env"

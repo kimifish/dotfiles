@@ -214,3 +214,4 @@ else
 fi
 # }}}
 
+. "/home/kimifish/.local/share/cargo/env"

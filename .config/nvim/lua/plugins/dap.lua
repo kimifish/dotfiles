@@ -1,0 +1,149 @@
+return {
+  -- Debug Adapter and UI
+  { "mfussenegger/nvim-dap",   -- Debug Adapter
+    config = function ()
+      local dap = require('dap')
+      dap.configurations.python = {
+        {
+          type = 'python';
+          request = 'launch';
+          name = "Launch file";
+          program = "${file}";
+          pythonPath = function()
+            return '/usr/bin/python3'
+          end;
+        },
+      }
+    end
+  },
+
+  { "mfussenegger/nvim-dap-python",
+    config = function ()
+      -- require("nvim-dap-python").setup("uv")
+      local dap = require'dap'
+
+      function venv_python_path()
+          local cwd = vim.loop.cwd()
+          local where = venv_bin_detection('python')
+          if where == 'python' then
+              return '/usr/bin/python'
+          end
+          return where
+      end
+
+      function venv_bin_detection(tool)
+          local cwd = vim.loop.cwd()
+          if vim.fn.executable(cwd .. '/.venv/bin/' .. tool) == 1 then
+              return cwd .. '/.venv/bin/' .. tool
+          end
+          return tool
+      end
+
+      function file_exists(name)
+         local f=io.open(name,"r")
+         if f~=nil then io.close(f) return true else return false end
+      end
+
+      local set_python_dap = function()
+          require('dap-python').setup() -- earlier, so I can setup the various defaults ready to be replaced
+          require('dap-python').resolve_python = function()
+              return venv_python_path()
+          end
+          dap.configurations.python = {
+              {
+                  type = 'python';
+                  request = 'launch';
+                  name = "Launch file";
+                  program = "${file}";
+                  pythonPath = venv_python_path()
+              },
+              {
+                  type = 'debugpy',
+                  request = 'launch',
+                  name = 'Django',
+                  program = '${workspaceFolder}/manage.py',
+                  args = {
+                      'runserver',
+                  },
+                  justMyCode = true,
+                  django = true,
+                  console = "integratedTerminal",
+                  pythonPath = venv_python_path()
+              },
+              {
+                  type = 'python';
+                  request = 'attach';
+                  name = 'Attach remote';
+                  connect = function()
+                      return {
+                          host = 'localhost',
+                          port = 5678
+                      }
+                  end;
+              },
+              {
+                  type = 'python';
+                  request = 'launch';
+                  name = 'Launch file with arguments';
+                  program = '${file}';
+                  args = function()
+                      local args_string = vim.fn.input('Arguments: ')
+                      return vim.split(args_string, " +")
+                  end;
+                  console = "integratedTerminal",
+                  pythonPath = venv_python_path()
+              }
+          }
+
+          dap.adapters.python = {
+              type = 'executable',
+              command = venv_python_path(),
+              args = {'-m', 'debugpy.adapter'}
+          }
+      end
+
+      set_python_dap()
+      vim.api.nvim_create_autocmd({"DirChanged"}, {
+          callback = function() set_python_dap() end,
+      })
+    end
+  },
+
+  { "rcarriga/nvim-dap-ui",
+    requires = {"mfussenegger/nvim-dap"},
+    config = function ()
+        require("dapui").setup({
+            layouts = {
+                {
+                    elements = {
+                        {
+                            id = "scopes",
+                            size = 0.70
+                        },
+                        {
+                            id = "breakpoints",
+                            size = 0.10
+                        },
+                        {
+                            id = "stacks",
+                            size = 0.20
+                        }
+                    },
+                    position = "left",
+                    size = 50
+                },
+                {
+                    elements = {
+                        {
+                            id = "repl",
+                            size = 1
+                        }
+                    },
+                    position = "bottom",
+                    size = 10
+                }
+            },
+        })
+    end
+  },
+}

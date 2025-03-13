@@ -3,31 +3,32 @@ root: ~/
 windows:
   - xray:
       panes:
-          ssh kimifish@xray.zt
+          # ssh kimifish@xray.zt
+          ssh xray
   - kimiPC:
       panes:
-        - ssh kimifish@kimipc.zt
+        - ssh kimipc
   - kimitop:
       panes:
-        -  ssh kimifish@kimitop.zt
+        -  ssh kimitop
   - kimipad:
       panes:
-        -  ssh kimifish@kimipad.zt
+        -  ssh kimipad
   - kimisus:
       panes:
-        -  ssh kimifish@kimisus.zt
+        -  ssh kimisus
   - kimihome:
       panes:
-        - ssh openhabian@kimihome.zt
+        - ssh kimihome
   - vault:
       panes:
-        - ssh pi@vault.zt
+        - ssh vault
   # - amnezia:
   #     panes:
   #         ssh kimifish@amnezia.zt
   - SMaster:
       panes:
-        -  ssh kimifish@soundmaster.zt
+        -  ssh soundmaster
   - Phone:
       panes:
           ssh kimiphone2.zt -p 2222

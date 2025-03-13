@@ -1,9 +1,9 @@
 [Default Applications]
-text/html=qutebrowser.desktop
-x-scheme-handler/http=qutebrowser.desktop
-x-scheme-handler/https=qutebrowser.desktop
-x-scheme-handler/about=qutebrowser.desktop
-x-scheme-handler/unknown=qutebrowser.desktop
+text/html=brave-browser.desktop
+x-scheme-handler/http=brave-browser.desktop
+x-scheme-handler/https=brave-browser.desktop
+x-scheme-handler/about=brave-browser.desktop
+x-scheme-handler/unknown=brave-browser.desktop
 x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
 image/png=qimgv.desktop
 x-scheme-handler/jetbrains-gateway=jetbrains-gateway.desktop

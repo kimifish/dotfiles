@@ -91,6 +91,16 @@ if which systemctl &>/dev/null; then
     }
 fi
 #
+# Load environment variables from .env file
+export_from() {
+    # Note: you might need to replace "\s" with "[[:space:]]"
+    set -a
+    source <("$1" | sed -e '/^#/d;/^\s*$/d' -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g")
+    set +a
+}
+
+    # [ -f "test.env" ] && load_dotenv "test.env"
+
 vifm()
 {
     local dst="$(command vifm --choose-dir - "$@")"
@@ -100,4 +110,5 @@ vifm()
     fi
     cd "$dst"
 } 
+vim() { set -a; source ~/.bashrc.d/api_keys; set +a; command /bin/vim "$@"; }
 # }}}

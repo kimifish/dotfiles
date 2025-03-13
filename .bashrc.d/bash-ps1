@@ -114,7 +114,7 @@ _jobs() {  #{{{
     printf "$jobs_out_str"
 }  #}}}
 _git_status() {  #{{{
-	sep=""
+    sep=""
     git_fg="$1"
     git_bg="$2"
     git_fg2="$3"
@@ -122,53 +122,48 @@ _git_status() {  #{{{
     GSP="$(git status --porcelain -uno -b 2>/dev/null)"
     GDir="$(git rev-parse --show-toplevel 2>/dev/null)"
 
+    # Get and format branch name
     local GSPb=$(awk '/##/ {print $2}' <<< "$GSP")
-	local GSPbcut=${GSPb:0:6}
     if [[ "$GSPb" != "" ]]; then
-	case "$GSPbcut" in
-	    master) 	GSPb="M" ;;
-		main..)     GSPb="m" ;;
-	    *)		: ;;
-	esac
-	git_str+="$GSPb"
-    fi
-    # GSP Modified
-    local GSPm="$(grep -c "^ M" <<< "${GSP}")"
-    if [[ "${GSPm}" > "0" ]]; then
-	git_str+="\[\e[38;${col_r};${git_fg2}m\]≠${GSPm}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Modified
-    fi
-
-    ## GSP Deleted
-    local GSPd="$(grep -c "^ D" <<< "${GSP}")"
-    if [[ "${GSPd}" -gt "0" ]]; then
-	git_str+="\[\e[38;${col_r};${git_fg2}m\]x${GSPd}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Deleted
+        GSPb=${GSPb%...origin/*}
+        GSPb=${GSPb#origin/}
+        # Truncate branch name if longer than 10 chars
+        if [ ${#GSPb} -gt 10 ]; then
+            GSPb="${GSPb:0:9}…"
+        fi
+        case "$GSPb" in
+            master) GSPb="M" ;;
+            main)   GSPb="m" ;;
+            *)      : ;;
+        esac
+        git_str+="$GSPb"
     fi
 
-    ## GSP Added
-    local GSPa="$(grep -c "^ A" <<< "${GSP}")"
-    if [[ "${GSPa}" -gt "0" ]]; then
-	git_str+="\[\e[38;${col_r};${git_fg2}m\]✚${GSPa}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Added
-    fi
+    # Function to add status symbol with count
+    add_status_symbol() {
+        local count="$1"
+        local symbol="$2"
+        local check_home="${3:-false}"
+        
+        if [[ "${count}" -gt "0" ]]; then
+            if [[ "$check_home" == "true" && "$GDir" == "$HOME" ]]; then
+                return
+            fi
+            git_str+="\[\e[38;${col_r};${git_fg2}m\]${symbol}${count}${sep}\[\e[38;${col_r};${git_fg2}m\]"
+        fi
+    }
 
-    ## GSP Renamed
-    local GSPr="$(grep -c "^ R" <<< "${GSP}")"
-    if [[ "${GSPr}" -gt "0" ]]; then
-	git_str+="\[\e[38;${col_r};${git_fg2}m\]☇${GSPr}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Renamed
-    fi
-
-    ## GSP Untracked
-    local GSPu="$(grep -c "^\?" <<< "${GSP}")"
-    if [[ "${GSPu}" -gt "0" ]]; then
-	if [[ "$GDir" != "$HOME" ]]; then
-	    git_str+="\[\e[38;${col_r};${git_fg2}m\]?${GSPu}${sep}\[\e[38;${col_r};${git_fg2}m\]"    ## Untracked
-	fi
-    fi
+    # Check different status types
+    add_status_symbol "$(grep -c "^ M" <<< "${GSP}")" "≠"     # Modified
+    add_status_symbol "$(grep -c "^ D" <<< "${GSP}")" "x"     # Deleted
+    add_status_symbol "$(grep -c "^ A" <<< "${GSP}")" "✚"     # Added
+    add_status_symbol "$(grep -c "^ R" <<< "${GSP}")" "☇"     # Renamed
+    add_status_symbol "$(grep -c "^\?" <<< "${GSP}")" "?" true # Untracked
     
     if [[ "$git_str" != "" ]]; then 
-	local git_out_str="$(_entry ${git_str} ${git_fg} ${git_bg})"
-	printf "${git_out_str}"
+        local git_out_str="$(_entry ${git_str} ${git_fg} ${git_bg})"
+        printf "${git_out_str}"
     fi
-
 }  #}}}
 _venv_status() {  #{{{
     sep=""
@@ -195,6 +190,28 @@ _vifm_status() {  #{{{
        vifm_str=`_entry "${text}" ${vifm_fg} ${vifm_bg}`
        printf "$vifm_str"
    fi
+}  #}}}
+_dir_status() {  #{{{
+    local path="$PWD"
+    local dir_fg="$1"
+    local dir_bg="$2"
+	path=${path//$HOME/\~}  # Replace $HOME with ~
+	path=${path//pyprojects/}  # Replace "pyprojects" with custom symbol
+	path=${path//rust_projects/} 
+	path=${path//.config/.} 
+    
+    # Shorten path components
+    if [ ${#path} -gt 30 ]; then
+        # Keep the first directory and last 2 directories, shorten the rest
+        local dirs=(${path//\// })
+        if [ ${#dirs[@]} -gt 3 ]; then
+            local first=${dirs[0]}
+            local last_two="${dirs[-2]}/${dirs[-1]}"
+            path="$first/.../$last_two"
+        fi
+    fi
+	dir_str=`_entry "${path}" ${dir_fg} ${dir_bg}`
+	printf "$dir_str"
 }  #}}}
 
 
@@ -242,10 +259,10 @@ __prompt_command() {
 	PS1+="$(_jobs ${plt[4]} ${plt[2]})"
 	PS1+="$(_entry ${user} ${plt[1]} ${plt[4]})"     # User entry
 	PS1+="$(_entry '\\h' ${plt[0]} ${plt[3]})"      # Host entry
-	PS1+="$(_git_status ${plt[4]} ${plt[1]} ${plt[0]})"      # Current dir entry
-	PS1+="$(_entry '\\w' ${plt[3]} ${plt[1]})"      # Current dir entry
+	PS1+="$(_dir_status ${plt[3]} ${plt[1]})"      # Current dir entry
+	PS1+="$(_git_status ${plt[0]} ${plt[2]} ${plt[5]})"      # Git entry
 	PS1+="$(_venv_status 32 221)"      # Current venv 
-	PS1+="$(_vifm_status 247 25)"      # Current venv 
+	PS1+="$(_vifm_status 247 25)"      # if inside Vifm
 	PS1+="$(_exit_code $prev_exit)"                            # Exit code entry
 	PS1+="$(_entry '' 0 0)"
 

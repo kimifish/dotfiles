@@ -93,22 +93,28 @@ popup_during_fullscreen leave_fullscreen
 #floating_maximum_size 1920 1080
 # Tell every window to behave centered.
 
-for_window [window_role="floating terminal"] floating enable
-for_window [window_role="floating terminal"] resize set 660 440
+# for_window [window_role="floating terminal"] floating enable
+# for_window [window_role="floating terminal"] resize set 660 440
 for_window [class="floating terminal"] floating enable
-for_window [class="floating terminal"] resize set 660 440
+for_window [class="floating terminal"] resize set 960 940
 # for_window [floating] resize set 660 440
 # for_window [class="vlc"] floating enable
 
-for_window [window_role="htop"] floating enable
-for_window [window_role="htop"] resize set 660 760
+# for_window [window_role="htop"] floating enable
+# for_window [window_role="htop"] resize set 660 760
 for_window [class="htop"] floating enable
 for_window [class="htop"] resize set 660 760
 
-for_window [window_role="vifm"] floating enable 
-for_window [window_role="vifm"] resize set 960 640
+# for_window [window_role="vifm"] floating enable 
+# for_window [window_role="vifm"] resize set 960 640
 for_window [class="vifm"] floating enable 
-for_window [class="vifm"] resize set 960 640
+for_window [class="vifm"] resize set 960 940
+
+for_window [class="taskwarrior"] floating enable 
+for_window [class="taskwarrior"] resize set 1200 800
+
+for_window [class="music"] floating enable 
+for_window [class="music"] resize set 1000 800
 
 # for_window [class="dagor2"] floating disable
 # for_window [class="Totalcmd.exe"] floating enable
@@ -208,14 +214,13 @@ bindsym $mod+Shift+s sticky toggle
 # Apps binds {{{
 
 # vifm
-# bindsym $mod+Return exec i3-sensible-terminal --class="vifm" "vifm"
 bindsym $mod+semicolon exec ~/.config/rofi/tlaunchers/type-2/combilauncher.sh
 # vim-input
 bindsym $mod+v exec clipcat-menu
 bindsym $mod+Shift+v exec vim-input-field.sh
 # tasksh
 #bindsym $mod+n exec i3-sensible-terminal --class="vifm" --geometry=160x45 "TERM=tmux-256color tw-tui.AppImage"
-bindsym $mod+n exec i3-sensible-terminal --class="vifm" "tw-tui.AppImage"
+bindsym $mod+n exec i3-sensible-terminal --class="taskwarrior" "tw-tui.AppImage"
 # flameshot
 bindsym $mod+Print exec flameshot gui 
 # dmenu-desktop
@@ -284,7 +289,8 @@ bindsym $mod+Pause exec screenlock lock
 bindsym $mod+Shift+slash exec i3-sensible-terminal --class=vifm -e ~/bin/i3-binds
 
 # bindsym $mod+i exec kitty --class="vifm" "tmux" "new-session" "-A" "-s" "AI"
-bindsym $mod+i exec kitty --class="vifm" "tmuxinator" "ai"
+bindsym $mod+i exec kitty --class="vifm" "tmuxinator" "I" # AI Start
+
 
 bindsym --release $mod+Shift+Pause exec monitorcontrol off
 # }}}
@@ -359,5 +365,6 @@ include ~/.config/i3/`hostname`.d/*.conf
 
 # Должно быть, обои стоит ставить сюда, иначе рвутся
 # Setting wallpaper
-exec $HOME/bin/set_random_wallpaper.sh "$HOME/kimiside@gmail.com/Photos/Wallpapers/Cowboy Bebop"
+# exec $HOME/bin/set_random_wallpaper.sh "$HOME/kimiside@gmail.com/Photos/Wallpapers/Cowboy Bebop"
+exec $HOME/bin/set_random_wallpaper.sh "$HOME/kimiside@gmail.com/Photos/Wallpapers/ArtOfBaka"
 
