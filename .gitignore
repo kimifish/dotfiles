@@ -2,3 +2,4 @@
 *~
 *.swp
 **api_keys
+.bashrc.d/api_keys
