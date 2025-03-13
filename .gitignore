@@ -1,4 +1,4 @@
 # Ignore temporary files
 *~
 *.swp
-*api_keys*
+**/api_keys
